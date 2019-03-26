@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Materialize Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="./styles/styles.css" media="screen" title="no title" charset="utf-8">
+
+    <!-- Google Fonts Link -->
+    <link href="" rel="stylesheet">
+
+    <title>#Goals</title>
+</head>
+<body>
+    <div class="container" id="mainContent">
+        <!-- Page Content goes here -->
+        <h1 id="goalsName">#Goals</h1>
+
+        <div class="row">
+
+            <!-- Login Form -->
+            <form class="col s5">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="userNameEnter" type="text" class="validate">
+                        <label for="userNameEnter">User Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate">
+                        <label for="passwordEnter">Password</label>
+                    </div>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action" id="loginButton">Login</button>
+            </form>
+        
+            <!-- Middle Break -->
+
+            <div class="row">
+                <div class="col s2">
+                    <h4>OR</h4>
+                </div>
+            </div>
+
+            <!-- Sign Up Form -->
+            <form class="col s5">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="firstName" type="text" class="validate">
+                        <label for="firstName">First Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="lastName" type="text" class="validate">
+                        <label for="lastName">Last Name</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="username" type="text" data-length="20">
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password1" type="password" class="validate">
+                        <label for="passwordEnter1">Password</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password2" type="password" class="validate">
+                        <label for="passwordEnter2">Re-Enter Password</label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="linkImage" type="password" class="validate">
+                        <label for="linkImage">Link to Photo</label>
+                    </div>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action" id="signUpButton">Sign Up!</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- JQuery References -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Script File -->
+    <script src="./js/index.js"></script>
+</body>
+</html>
