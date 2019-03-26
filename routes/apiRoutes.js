@@ -28,7 +28,8 @@ module.exports = function (app) {
       name: req.body.name,
       username: req.body.username,
       password: req.body.password,
-      imageURL: req.body.imageURL
+      imageURL: req.body.imageURL,
+
     }).then(function (dbNewUser) {
       res.json(dbNewUser);
     });
@@ -63,12 +64,8 @@ module.exports = function (app) {
 
 // PUT ROUTES
 
-//Update a goal with accomplishment
-//Looks like this will be a stretch goal for now
+//Update a goal with accomplishment boolean
 app.put("/api/updateGoal", function (req, res) {
-
-  // Update takes in an object describing the properties we want to update, and
-  // we use where to describe which objects we want to update
   db.Goal.update({
     goalMet: req.body.goalMet
   }, {
@@ -79,8 +76,58 @@ app.put("/api/updateGoal", function (req, res) {
       res.json(dbUpdateGoal);
     })
     .catch(function (err) {
-      // Whenever a validation or flag fails, an error is thrown
-      // We can "catch" the error to prevent it from being "thrown", which could crash our node app
       res.json(err);
     });
+
+
+    //Where should this be located?
+    db.User.update({
+      goalsSucceeded: goalsSucceeded + 1
+    }).then(function (results) {
+      // delete the goal?
+    }); 
 });
+
+
+
+//Gus's copypasta Sequelize methods
+
+
+// Sequelize function that are not specified yet. Just coding them out for reference.
+// Looks for a user with the username entered.
+
+db.User.findAll({
+  where: {
+    username: req.body.userName
+  }
+}).then(function (results) {
+  // look for password match
+});
+
+// Adds a new user to the table/database.
+db.User.create({
+  name: req.body.name,
+  username: req.body.userName,
+  password: req.body.password,
+  imageURL: req.body.imgageURL,
+}).then(function (results) {
+  res.json(results);
+});
+
+// Updating a goal to complete. ??(still deciding if it should ne deleted afterwards)??
+db.Goal.update({
+  goalMet: true
+}).then(function (results) {
+  res.json(results);
+});
+
+// User completing a goal to complete and then it is deleted
+db.User.update({
+  goalsSucceeded: goalsSucceeded + 1
+}).then(function (results) {
+  // delete the goal?
+});
+
+// Additional notes: 
+// Maybe have it check for if a goal's boolean value is true-
+// it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
