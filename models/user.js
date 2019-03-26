@@ -9,12 +9,14 @@ module.exports = function (sequelize, DataTypes) {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: true,
+            len: [5, 20]
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: true,
+            len: [5]
         },
         imageURL: {
             type: DataTypes.STRING,
