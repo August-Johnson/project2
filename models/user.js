@@ -20,6 +20,18 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
+        },
+        goalsMade: {
+            type: INTEGER,
+            defaultValue: 0
+        },
+        goalsSucceeded: {
+            type: INTEGER,
+            defaultValue: 0
+        },
+        goalsDeleted: {
+            type: INTEGER,
+            defaultValue: 0
         }
     });
 
