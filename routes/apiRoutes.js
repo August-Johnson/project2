@@ -23,8 +23,6 @@ module.exports = function (app) {
   });
 };
 
-
-
 /*
 
 // Sequelize function that are not specified yet. Just coding them out for reference.
