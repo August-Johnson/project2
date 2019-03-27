@@ -2,37 +2,61 @@
 $(".create-user").on("submit", function (event) {
   event.preventDefault();
 
-  var newUser = {
-    name: $("#name").val().trim(),
-    username: $("#username-field").val().trim(),
-    password: $("#password-field").val().trim(),
-    imageURL: $("#user-image").val().trim()
-  };
+  // Creating variables that hold the input field values
+  var name = $("#name").val().trim();
+  var username = $("#username-field").val().trim();
+  var password = $("#password-field").val().trim();
+  var userImage = $("#user-image").val().trim();
 
-  $.ajax("/api/users", {
-    type: "POST",
-    data: newUser
-  }).then(function () {
-    // ?
-  });
+  // Checking if all of the fields have been filled out
+  if (name !== "" && username !== "" && password !== "" && userImage !== "") {
+
+    // If they have been filled out and pass the if statement, create an object called newUser and pass in the form data for its values
+    var newUser = {
+      name: name,
+      username: username,
+      password: password,
+      imageURL: userImage
+    };
+
+    // ajax post with the newUser object data
+    $.ajax("/api/users", {
+      type: "POST",
+      data: newUser
+    }).then(function () {
+      // ?
+    });
+  }
 });
+// More authentication (If the user didn't enter a name or username, etc.) Alert them somehow
 
 // User login
 $(".log-in").on("submit", function (event) {
   event.preventDefault();
 
-  var userLogin = {
-    username: $("#username-field").val().trim(),
-    password: $("#password-field").val().trim()
-  };
+  // Creating variables that hold the login info values
+  var username = $("#username-field").val().trim();
+  var password = $("#password-field").val().trim();
 
-  $.ajax("/api/users", {
-    type: "POST",
-    data: userLogin
-  }).then(function () {
-    // ?
-  });
+  // Checking if both fields have been filled out/not left blank
+  if (username !== "" && password !== "") {
+
+    // Creating an object to reference when we check the database for the user login credentials
+    var userLogin = {
+      username: username,
+      password: password
+    };
+
+    // ajax post with the userLogin object data
+    $.ajax("/api/users", {
+      type: "POST",
+      data: userLogin
+    }).then(function () {
+      // ?
+    });
+  }
 });
+// More authentication
 
 // User create goal
 $(".user-goals").on("submit", function (event) {
