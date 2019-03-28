@@ -2,13 +2,16 @@ var db = require("../models");
 
 module.exports = function (app) {
 
+
   //=======================================================================================
+
   //GET ROUTES
 
   // Get all Users
   app.get("/api/Users", function (req, res) {
     db.User.findAll({}).then(function (dbUsers) {
       res.json(dbUsers);
+
     });
   });
 
@@ -148,3 +151,4 @@ module.exports = function (app) {
 // Maybe have it check for if a goal's boolean value is true-
 
 // it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
+
