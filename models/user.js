@@ -25,15 +25,15 @@ module.exports = function (sequelize, DataTypes) {
             unique: true
         },
         goalsMade: {
-            type: INTEGER,
+            type: DataTypes.INTEGER,
             defaultValue: 0
         },
         goalsSucceeded: {
-            type: INTEGER,
+            type: DataTypes.INTEGER,
             defaultValue: 0
         },
         goalsDeleted: {
-            type: INTEGER,
+            type: DataTypes.INTEGER,
             defaultValue: 0
         }
     });
