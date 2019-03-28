@@ -2,15 +2,23 @@ var db = require("../models");
 
 module.exports = function (app) {
   // Get all examples
-  app.get("/login", function (req, res) { //Route for login link
+  app.post("/login", function (req, res) { //Route for login link
     db.User.findAll({
       where: { //SELECT * FROM db.User WHERE username = req.body.username AND password = req.body.password
-        username: req.body.userName,
+        username: req.body.username,
         password: req.body.password
-      }
-    })
-  }).then(function (userInfo) {
-    console.log(userInfo)
+      },
+      raw: true,
+    }).then(function (userInfo) {
+      var response = userInfo
+      console.log(response);
+      console.log(response[0]);
+      console.log(response[0].id);
+
+      //grab user id
+      // var userId = userInfo;
+      //write id to local storage
+    });
   })
 
   app.get("/newUser", function (req, res) {
@@ -21,43 +29,46 @@ module.exports = function (app) {
         password: req.body.password,
         imageURL: req.body.imageURL,
       }
-    })
+    }).then(function (createdUser) {
+      console.log(createdUser)
+    });
   })
+}
 
-  //http://docs.sequelizejs.com/manual/models-usage.html#-code-findorcreate--code----search-for-a-specific-element-or-create-it-if-not-available
+//   //http://docs.sequelizejs.com/manual/models-usage.html#-code-findorcreate--code----search-for-a-specific-element-or-create-it-if-not-available
 
-  // Adds a new user to the table/database.
-  db.User.findOrCreate({
-    where: {
-      name: req.body.name,
-      username: req.body.userName,
-      password: req.body.password,
-      imageURL: req.body.imageURL,
-    }
-  }).then(function (user, created) {
-    console.log(user.get({
-      plain: true
-    }))
-    console.log(created)
-    //if statement: user created, return success & user ID
-    //else, return that username has already been created, redirect to login
-    res.json(created);
-  });
+//   // Adds a new user to the table/database.
+//   db.User.findOrCreate({
+//     where: {
+//       name: req.body.name,
+//       username: req.body.userName,
+//       password: req.body.password,
+//       imageURL: req.body.imageURL,
+//     }
+//   }).then(function (user, created) {
+//     console.log(user.get({
+//       plain: true
+//     }))
+//     console.log(created)
+//     //if statement: user created, return success & user ID
+//     //else, return that username has already been created, redirect to login
+//     res.json(created);
+//   });
 
-  // Create a new example
-  app.post("/api/examples", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
+//   // Create a new example
+//   app.post("/api/examples", function (req, res) {
+//     db.Example.create(req.body).then(function (dbExample) {
+//       res.json(dbExample);
+//     });
+//   });
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
-};
+//   // Delete an example by id
+//   app.delete("/api/examples/:id", function (req, res) {
+//     db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+//       res.json(dbExample);
+//     });
+//   });
+// };
 
 /*
 
@@ -102,10 +113,9 @@ db.User.update({
 
 */
 
-/* EXAMPLE CODE
-  // Get all examples
-  app.get("/api/examples", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
-      res.json(dbExamples);
-    });
-    */
+//  EXAMPLE CODE
+//   // Get all examples
+//   app.get("/api/examples", function (req, res) {
+//     db.Example.findAll({}).then(function (dbExamples) {
+//       res.json(dbExamples);
+//     });
