@@ -10,15 +10,16 @@ module.exports = function (app) {
       },
       raw: true,
     }).then(function (userInfo) {
-      var response = userInfo
-      console.log(response);
-      console.log(response[0]);
-      console.log(response[0].id);
+
+      console.log(userInfo[0]);
 
       //grab user id
-      // var userId = userInfo;
-      //write id to local storage
+      console.log("\nUser logged in with ID of: " + userInfo[0].id);
 
+      res.json()
+      //create object, pass in specific info to obect then res.json
+    });
+  });
 
   //=======================================================================================
 
@@ -254,3 +255,4 @@ db.User.update({
 
 // it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
 
+*/
