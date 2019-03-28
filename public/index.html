@@ -37,7 +37,7 @@
                     <div class="field">
                         <label class="label">Username</label>
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="text" placeholder="Enter Username" value="">
+                            <input class="input" id="usernameLogin" type="text" placeholder="Enter Username" value="">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -46,7 +46,7 @@
 
                     <div class="field">
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Password" id="enterPassword">
+                            <input class="input" id="passwordLogin" type="password" placeholder="Password" id="enterPassword">
                             <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                             </span>
@@ -73,7 +73,7 @@
                     <div class="field">
                         <label class="label">Select A Username</label>
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="text" placeholder="Enter Username" value="">
+                            <input class="input" id="usernameCreate" type="text" placeholder="Enter Username" value="">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -82,7 +82,7 @@
 
                     <div class="field">
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Choose Password" id="choosePass1">
+                            <input class="input" id="passwordCreate" type="password" placeholder="Choose Password" id="choosePass1">
                             <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                             </span>
@@ -91,7 +91,7 @@
 
                     <div class="field">
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Re-Enter Password" id="choosePass2">
+                            <input class="input" id="passwordConfirm" type="password" placeholder="Re-Enter Password" id="choosePass2">
                             <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                             </span>
@@ -101,7 +101,7 @@
                     <div class="field">
                         <label class="label">Profile Photo Link</label>
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="text" placeholder="Enter URL" value="">
+                            <input class="input" id="imageLinkCreate" type="text" placeholder="Enter URL" value="">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-camera-retro"></i>
                             </span>
@@ -112,7 +112,7 @@
                         <label class="label">Choose a #goal</label>
                         <div class="control">
                             <div class="select">
-                            <select>
+                            <select id="goalCategory">
                                 <option id="optGeneral">General</option>
                                 <option id="optHealth">Health & Fitness</option>
                                 <option id="optChores">Chores</option>
