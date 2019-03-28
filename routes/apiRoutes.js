@@ -2,8 +2,6 @@ var db = require("../models");
 
 module.exports = function (app) {
 
-
-
   //GET ROUTES
 
   // Get all Users
@@ -62,24 +60,23 @@ module.exports = function (app) {
 
     });
   });
-};
 
-// PUT ROUTES
+  // PUT ROUTES
 
-//Update a goal with accomplishment boolean
-app.put("/api/updateGoal", function (req, res) {
-  db.Goal.update({
-    goalMet: req.body.goalMet
-  }, {
-      where: {
-        id: req.body.id
-      }
-    }).then(function (dbUpdateGoal) {
-      res.json(dbUpdateGoal);
-    })
-    .catch(function (err) {
-      res.json(err);
-    });
+  //Update a goal with accomplishment boolean
+  app.put("/api/updateGoal", function (req, res) {
+    db.Goal.update({
+      goalMet: req.body.goalMet
+    }, {
+        where: {
+          id: req.body.id
+        }
+      }).then(function (dbUpdateGoal) {
+        res.json(dbUpdateGoal);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
 
 
     //Where should this be located?
@@ -87,51 +84,55 @@ app.put("/api/updateGoal", function (req, res) {
       goalsSucceeded: goalsSucceeded + 1
     }).then(function (results) {
       // delete the goal?
-    }); 
-});
+    });
+  });
 
 
 
-//Gus's copypasta Sequelize methods
+  //Gus's copypasta Sequelize methods
 
-
-// Sequelize function that are not specified yet. Just coding them out for reference.
-// Looks for a user with the username entered.
-
-db.User.findAll({
-  where: {
-    username: req.body.userName
-  }
-}).then(function (results) {
-  // look for password match
-});
-
-// Adds a new user to the table/database.
-db.User.create({
-  name: req.body.name,
-  username: req.body.userName,
-  password: req.body.password,
-  imageURL: req.body.imgageURL,
-}).then(function (results) {
-  res.json(results);
-});
-
-// Updating a goal to complete. ??(still deciding if it should ne deleted afterwards)??
-db.Goal.update({
-  goalMet: true
-}).then(function (results) {
-  res.json(results);
-});
-
-// User completing a goal to complete and then it is deleted
-db.User.update({
-  goalsSucceeded: goalsSucceeded + 1
-}).then(function (results) {
-  // delete the goal?
-});
-
-// Additional notes: 
-// Maybe have it check for if a goal's boolean value is true-
-
-// it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
-
+  /*
+    // Sequelize function that are not specified yet. Just coding them out for reference.
+    // Looks for a user with the username entered.
+  
+    db.User.findAll({
+      where: {
+        username: req.body.userName
+      }
+    }).then(function (results) {
+      // look for password match
+    });
+  
+    // Adds a new user to the table/database.
+    db.User.create({
+      name: req.body.name,
+      username: req.body.userName,
+      password: req.body.password,
+      imageURL: req.body.imgageURL,
+    }).then(function (results) {
+      res.json(results);
+    });
+  
+    // Updating a goal to complete. ??(still deciding if it should ne deleted afterwards)??
+    db.Goal.update({
+      goalMet: true
+    }).then(function (results) {
+      res.json(results);
+    });
+  
+    // User completing a goal to complete and then it is deleted
+    db.User.update({
+      goalsSucceeded: goalsSucceeded + 1
+    }).then(function (results) {
+      // delete the goal?
+    });
+  
+  };
+  
+  // Additional notes:
+  // Maybe have it check for if a goal's boolean value is true-
+  
+  // it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
+  
+  */
+};

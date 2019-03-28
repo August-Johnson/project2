@@ -1,30 +1,30 @@
 {
-  "name": "node-handlebars-boilerplate",
+  "name": "project2",
   "version": "1.0.0",
-  "description": "Project 2 Starter",
+  "description": "",
   "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "start": "node server.js",
-    "lint": "eslint **/*.js --quiet",
-    "fix": "eslint --fix .",
-    "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/August-Johnson/project2.git"
+  },
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "materialize-css": "^1.0.0-rc.2",
-    "mysql2": "^1.6.4",
-    "sequelize": "^4.41.2"
+  "bugs": {
+    "url": "https://github.com/August-Johnson/project2/issues"
   },
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-http": "^4.0.0",
-    "cross-env": "^5.2.0",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.2",
-    "mocha": "^5.2.0",
-    "prettier": "^1.13.7"
+  "homepage": "https://github.com/August-Johnson/project2#readme",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.2.1"
   }
 }

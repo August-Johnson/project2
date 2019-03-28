@@ -16,7 +16,6 @@ module.exports = function (sequelize, DataTypes) {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
             len: [5]
         },
         imageURL: {
@@ -38,6 +37,7 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
+    // Check for true association to Goal object!
     User.associate = function (models) {
         User.hasMany(models.Goal, {
             onDelete: "cascade"
