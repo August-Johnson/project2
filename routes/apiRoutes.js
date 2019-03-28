@@ -3,6 +3,7 @@ var db = require("../models");
 module.exports = function (app) {
 
 
+
   //GET ROUTES
 
   // Get all Users
@@ -58,6 +59,7 @@ module.exports = function (app) {
       }
     }).then(function (dbDeleteGoal) {
       res.json(dbDeleteGoal);
+
     });
   });
 };
@@ -130,4 +132,6 @@ db.User.update({
 
 // Additional notes: 
 // Maybe have it check for if a goal's boolean value is true-
+
 // it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
+
