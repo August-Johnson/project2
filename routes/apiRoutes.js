@@ -2,11 +2,26 @@ var db = require("../models");
 
 module.exports = function (app) {
   // Get all examples
-  app.get("/api/examples", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
-      res.json(dbExamples);
-    });
+  app.get("/login", function (req, res) { //Route for login link
+    db.User.findAll({
+      where: { //SELECT * FROM db.User WHERE username = req.body.username AND password = req.body.password
+        username: req.body.userName,
+        password: req.body.password
+      }
+    })
+  }).then(function (userInfo) {
+    console.log(userInfo)
+  })
 
+  app.get("/newUser", function (req, res) {
+    db.User.findOrCreate({
+      where: {
+        name: req.body.name,
+        username: req.body.userName,
+        password: req.body.password,
+        imageURL: req.body.imageURL,
+      }
+    })
   })
 
   //http://docs.sequelizejs.com/manual/models-usage.html#-code-findorcreate--code----search-for-a-specific-element-or-create-it-if-not-available
@@ -81,8 +96,16 @@ db.User.update({
   // delete the goal?
 });
 
-// Additional notes: 
+// Additional notes:
 // Maybe have it check for if a goal's boolean value is true-
 // it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
 
 */
+
+/* EXAMPLE CODE
+  // Get all examples
+  app.get("/api/examples", function (req, res) {
+    db.Example.findAll({}).then(function (dbExamples) {
+      res.json(dbExamples);
+    });
+    */
