@@ -1,99 +1,83 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
-
-// The API object contains methods for each kind of request we'll make
-var API = {
-  saveExample: function(example) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
-    });
-  },
-  getExamples: function() {
-    return $.ajax({
-      url: "api/examples",
-      type: "GET"
-    });
-  },
-  deleteExample: function(id) {
-    return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
-    });
-  }
-};
-
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
-
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
-
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
-    });
-
-    $exampleList.empty();
-    $exampleList.append($examples);
-  });
-};
-
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
+// User create
+$(".create-user").on("submit", function (event) {
   event.preventDefault();
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
-  };
+  // Creating variables that hold the input field values
+  var name = $("#name").val().trim();
+  var username = $("#username-field").val().trim();
+  var password = $("#password-field").val().trim();
+  var userImage = $("#user-image").val().trim();
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
+  // Checking if all of the fields have been filled out
+  if (name !== "" && username !== "" && password !== "" && userImage !== "") {
+
+    // If they have been filled out and pass the if statement, create an object called newUser and pass in the form data for its values
+    var newUser = {
+      name: name,
+      username: username,
+      password: password,
+      imageURL: userImage
+    };
+
+    // ajax post with the newUser object data
+    $.ajax("/api/users", {
+      type: "POST",
+      data: newUser
+    }).then(function () {
+      // ?
+    });
   }
+});
+// More authentication (If the user didn't enter a name or username, etc.) Alert them somehow
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
+// User login
+$(".log-in").on("submit", function (event) {
+  event.preventDefault();
+
+  // Creating variables that hold the login info values
+  var username = $("#username-field").val().trim();
+  var password = $("#password-field").val().trim();
+
+  // Checking if both fields have been filled out/not left blank
+  if (username !== "" && password !== "") {
+
+    // Creating an object to reference when we check the database for the user login credentials
+    var userLogin = {
+      username: username,
+      password: password
+    };
+
+    // ajax post with the userLogin object data
+    $.ajax("/api/users", {
+      type: "POST",
+      data: userLogin
+    }).then(function () {
+      // ?
+    });
+  }
+});
+// More authentication
+
+// User create goal
+$(".user-goals").on("submit", function (event) {
+  event.preventDefault();
+  // Tie the goals and data to the user making them. (id)?
+  // Waiting for the form structure to intake data from the fields.
+});
+
+// User update / check off goal
+// Setting the class to goal number to indicate it will be dynamic based on the goal being changed.
+$(".goal-number").on("click", function (event) {
+  event.preventDefault();
+
+  $.ajax("/api/user/:id", {
+    type: "PUT",
+    // Not sure about the data being passed since we already know what we want to change.
+    // Will change the goal to completed so we don't need a value. (I think)??
+    data: ""
+  }).then(function () {
+    // ?
   });
+});
 
-  $exampleText.val("");
-  $exampleDescription.val("");
-};
-
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
-
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
-  });
-};
-
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+// User delete goal
