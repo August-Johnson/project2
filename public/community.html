@@ -17,6 +17,38 @@
     <title>#Community</title>
 </head>
 <body>
+    <!-- Nav Bar -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="index.html">
+                <img src="images/logo_white.png" width="100" height="auto">
+                </a>
+            
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                </a>
+            </div>
+            
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" id="homeGo">
+                        My Home
+                    </a>
+                
+                    <a class="navbar-item" id="communityGo">
+                        Community
+                    </a>
+
+                    <a class="navbar-item" id="logoutGo">
+                        Log Out
+                    </a>
+                    <br>
+                </div>
+            </div>
+    </nav>
+    <!-- Header -->
     <div class="container is-fluid">
         <div class="column is-full" id="goalsHeader">
             <div class="is-large" id=goalsLogo>#Community</div>
@@ -137,7 +169,7 @@
                                     <nav class="level">
                                         <div class="level-left">
                                             <div class="level-item">
-                                                <a class="button is-info">Submit</a>
+                                                <a class="button is-info" id="postButton">Post!</a>
                                             </div>
                                         </div>
                                         <div class="level-right">

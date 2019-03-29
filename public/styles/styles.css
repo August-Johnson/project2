@@ -1,4 +1,35 @@
-#goalsHeader {
-  background-color: aqua;
-  padding: 150px;
+body {
+  background-image: url("../images/background_04.png")
+}
+
+#logoHeader {
+  height: 300px;
+}
+
+#logoutGo {
+  padding-right: 30px;
+}
+
+#logo {
+  padding: 50px;
+  width: 600px;
+  height: auto;
+}
+
+.has-image-centered {
+  margin: auto;
+}
+
+.button {
+  background: -moz-linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
+  background: -webkit-linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
+  background: linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
+}
+
+.navbar {
+  background-color: #1A6DFF;
+}
+
+.navbar-item {
+  color: #ffffff;
 }

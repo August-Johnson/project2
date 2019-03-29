@@ -1,7 +1,7 @@
 $(document).ready(function () {
     
     //This is a test to see if it's calling the site.js correctly
-    alert('Hey, this works!');
+    //alert('Hey, this works!');
 
 //goal arrays
 var generalGoals = [
@@ -153,6 +153,13 @@ $("#createAccount").on("click", function (event) {
         });
     }
 });
+
+//Message Board Posting
+// $("#postButton").on("click", function(event) {
+//     event.preventDefault();
+
+//     var usernamePost = 
+// })
 
 // End of document.ready
 });
