@@ -6,8 +6,8 @@ module.exports = function (app) {
   app.post("/login", function (req, res) {
     db.User.findAll({
       where: { //SELECT * FROM db.User WHERE username = req.body.username AND password = req.body.password
-        username: req.body.username,
-        password: req.body.password
+        username: req.body.usernameData,
+        password: req.body.passwordData
       },
       raw: true,
     }).then(function (userInfo) {
@@ -26,13 +26,12 @@ module.exports = function (app) {
   app.post("/newUser", function (req, res) {
     db.User.findOrCreate({
       where: {
-        name: req.body.name,
-        username: req.body.userName,
-        password: req.body.password,
-        imageURL: req.body.imageURL,
+        username: req.body.userNameData,
+        password: req.body.passwordData,
+        imageURL: req.body.userImageData
       }
     }).then(function (createdUser) {
-      console.log(createdUser)
+      console.log(createdUser);
     });
   })
 
@@ -42,7 +41,7 @@ module.exports = function (app) {
 
   // Get all Users
   app.get("/api/Users", function (req, res) {
-    db.User.findAll({}).then(function (dbUsers) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUsers) {
       res.json(dbUsers);
 
     });
@@ -50,7 +49,7 @@ module.exports = function (app) {
 
   // Get all Goals
   app.get("/api/Goals", function (req, res) {
-    db.Goal.findAll({}).then(function (dbGoals) {
+    db.Goal.findAll({ include: [db.User] }).then(function (dbGoals) {
       res.json(dbGoals);
     });
   })
@@ -255,10 +254,11 @@ db.User.update({
       // delete the goal?
     });
 
-    // Additional notes: 
+    // Additional notes:
     // Maybe have it check for if a goal's boolean value is true-
 
     // it runs a function that adds one to the user's goalsSucceeded value and then deletes the goal???
 
   });
 }
+*/

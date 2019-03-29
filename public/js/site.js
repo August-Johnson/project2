@@ -25,7 +25,7 @@ $("#loginAccount").on("click", function (event) {
             passwordData: password
         }
 
-        $.post("/api/Users", { data: userLoginData }).then(function (results) {
+        $.post("/login", { data: userLoginData }).then(function (results) {
             // 
         });
     }
@@ -67,7 +67,7 @@ $("#createAccount").on("click", function (event) {
             goalData: goal
         }
 
-        $.post("/api/Users", { data: userCreateData }).then(function (results) {
+        $.post("/newUser", { data: userCreateData }).then(function (results) {
             //
         });
     }
