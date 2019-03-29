@@ -16,7 +16,6 @@ module.exports = function (sequelize, DataTypes) {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
             len: [5]
         },
         imageURL: {
