@@ -1,8 +1,9 @@
 var db = require("../models");
 
 module.exports = function (app) {
-  // Get all examples
-  app.post("/login", function (req, res) { //Route for login link
+
+  //Route for login link
+  app.post("/login", function (req, res) {
     db.User.findAll({
       where: { //SELECT * FROM db.User WHERE username = req.body.username AND password = req.body.password
         username: req.body.username,
@@ -10,18 +11,32 @@ module.exports = function (app) {
       },
       raw: true,
     }).then(function (userInfo) {
-
       console.log(userInfo[0]);
-
-      //grab user id
-      console.log("\nUser logged in with ID of: " + userInfo[0].id);
-
-      res.json()
-      //create object, pass in specific info to obect then res.json
+      var loggedUser = {//Create an object of properties to return to client 
+        "userID": userInfo[0].id,
+        "userName": userInfo[0].username,
+        "userImage": userInfo[0].imageURL
+      };
+      console.log("\nUser logged in with ID of: " + userInfo[0].id); //console log on server side
+      res.json(loggedUser); //send array back to browser for use
     });
   });
 
-  //=======================================================================================
+  //Route to create a new user
+  app.post("/newUser", function (req, res) {
+    db.User.findOrCreate({
+      where: {
+        name: req.body.name,
+        username: req.body.userName,
+        password: req.body.password,
+        imageURL: req.body.imageURL,
+      }
+    }).then(function (createdUser) {
+      console.log(createdUser)
+    });
+  })
+
+
 
   //GET ROUTES
 
@@ -40,19 +55,8 @@ module.exports = function (app) {
     });
   })
 
-  app.get("/newUser", function (req, res) {
-    db.User.findOrCreate({
-      where: {
-        name: req.body.name,
-        username: req.body.userName,
-        password: req.body.password,
-        imageURL: req.body.imageURL,
-      }
-    }).then(function (createdUser) {
-      console.log(createdUser)
-    });
-  })
-}
+
+} // module export close
 
 //   //http://docs.sequelizejs.com/manual/models-usage.html#-code-findorcreate--code----search-for-a-specific-element-or-create-it-if-not-available
 
