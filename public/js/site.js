@@ -1,6 +1,7 @@
 $(document).ready(function () {
+    
+    //This is a test to see if it's calling the site.js correctly
     alert('Hey, this works!');
-    $('.parallax').parallax();
 
 // User Login form
 $("#loginAccount").on("click", function (event) {
