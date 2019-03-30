@@ -6,17 +6,19 @@ module.exports = function (app) {
     res.send("index.html")
   });
 
-  // // Load example page and pass in an example by id
-  app.get("/example/:id", function (req, res) {
-    db.Example.findOne({ 
-      where: { 
-        id: req.params.id 
-      }
-       }).then(function (dbExample) {
-      res.render("example", {
-        example: dbExample
+  // // Load the user page based on the ID of the logged in user from local storage
+  app.get("/userGoals", function (req, res) {
+    var userID = localStorage.getItem("userID");
+
+    db.Goal.findAll({
+        where: {
+          id: userID
+        }
+      }).then(function (userHTML) {
+        res.send("../public/user.html", {
+          example: dbExample
+        });
       });
-    });
   });
 
   // // Render 404 page for any unmatched routes

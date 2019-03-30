@@ -4,6 +4,7 @@ module.exports = function (app) {
 
   //Route for login link
   app.post("/login", function (req, res) {
+    console.log("Made it!");
     db.User.findAll({
       where: { //SELECT * FROM db.User WHERE username = req.body.username AND password = req.body.password
         username: req.body.usernameData,
@@ -11,6 +12,9 @@ module.exports = function (app) {
       },
       raw: true,
     }).then(function (userInfo) {
+      if (userInfo === null) {
+        console.log("Nothing there!");
+      }
       console.log(userInfo[0]);
       var loggedUser = {//Create an object of properties to return to client 
         "userID": userInfo[0].id,
