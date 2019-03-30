@@ -8,15 +8,49 @@
     <!-- Bulma -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     
-    <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="./styles/styles.css" media="screen" title="no title" charset="utf-8">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet">
 
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="./styles/styles.css" media="screen" title="no title" charset="utf-8">
+
     <title>User Page</title>
 </head>
 <body>
+    <!-- Nav Bar -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="user.html">
+            <img src="images/logo_white.png" width="100" height="auto">
+            </a>
+        
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+        
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="user.html" id="homeGo">
+                    My Goals
+                </a>
+            
+                <a class="navbar-item" href="community.html" id="communityGo">
+                    Community
+                </a>
+
+                <a class="navbar-item" href="index.html" id="logoutGo">
+                    Log Out
+                </a>
+                <br>
+            </div>
+        </div>
+    </nav>
     <div class="container is-fluid">
         <div class="column is-full" id="goalsHeader">
             <div class="is-large" id=goalsLogo>Welcome Back, !</div>

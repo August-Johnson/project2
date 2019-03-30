@@ -20,7 +20,7 @@ body {
   margin: auto;
 }
 
-.button {
+#loginAccount, #createAccount {
   background: -moz-linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
   background: -webkit-linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
   background: linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
