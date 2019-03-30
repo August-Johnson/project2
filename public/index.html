@@ -28,15 +28,15 @@
 
     <br><br>
 
-    <div class="container">
+    <div class="container is-centered">
 
         <div class="columns">
             <!-- Login to Account -->
-            <div class="column is-half">
+            <div class="column is-one-third">
 
                 <div class="box">
                     <div class="content is-medium">
-                        <h3>Login to Account</h3>
+                        <h3>Login to Your Account</h3>
                     </div>
 
                     <div class="field">
@@ -46,22 +46,31 @@
                             <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle" id="errorUserLogin" style="visibility:hidden"></i>
+                            </span>
                         </div>
+                        <p class="help is-danger" id="enterUserLogin" style="display: none;">Please enter a Username.</p>
                     </div>
 
                     <div class="field">
-                        <p class="control has-icons-left">
-                            <input class="input" id="passwordLogin" type="password" placeholder="Password" id="enterPassword">
+                        <label class="label">Password</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" id="passwordLogin" type="password" placeholder="Password" value="">
                             <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
+                                <i class="fas fa-lock"></i>
                             </span>
-                        </p>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle" id="errorIconPass" style="visibility:hidden"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger" id="enterPassLogin" style="display: none;">Please enter a password.</p>
                     </div>
 
                     <br>
 
                     <div class="control">
-                            <button class="button is-link" id="loginAccount">Login</button>
+                            <button class="button is-link" id="loginAccount"> <p id="buttonText">Login</p></button>
                     </div>
 
                 </div>
@@ -69,7 +78,7 @@
             </div>
 
             <!-- Create an Account -->
-            <div class="column is-half">
+            <div class="column is-one-third">
                 <div class="box">
                     <div class="content is-medium">
                         <h3>Create an Account</h3>
@@ -82,25 +91,41 @@
                             <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <p class="control has-icons-left">
-                            <input class="input" id="passwordCreate" type="password" placeholder="Choose Password" id="choosePass1">
-                            <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle" id="errorUserCreate" style="visibility:hidden"></i>
                             </span>
-                        </p>
+                        </div>
+                        <p class="help is-danger" id="enterNewUser" style="display: none;">Please enter a Username.</p>
+                        <p class="help is-danger" id="userNewLength" style="display: none;">Username must be between 5-20 characters.</p>
                     </div>
 
                     <div class="field">
-                        <p class="control has-icons-left">
+                        <label class="label">Enter A Password</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" id="passwordCreate" type="password" placeholder="Choose Password">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle" id="passErrorCreate" style="visibility:hidden"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger" id="enterNewPass" style="display: none;">Please enter a Password.</p>
+                        <p class="help is-danger" id="passNewLength" style="display: none;">Password must be at least 5 characters.</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Re-Enter Password</label>
+                        <div class="control has-icons-left has-icons-right">
                             <input class="input" id="passwordConfirm" type="password" placeholder="Re-Enter Password" id="choosePass2">
                             <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
+                                <i class="fas fa-lock"></i>
                             </span>
-                        </p>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle" id="passErrorCreate2" style="visibility:hidden"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger" id="passNoMatch" style="display: none;">Password does not match. Please re-enter password.</p>
                     </div>
 
                     <div class="field">
@@ -110,7 +135,11 @@
                             <span class="icon is-small is-left">
                                 <i class="fas fa-camera-retro"></i>
                             </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle" id="imgError" style="visibility:hidden"></i>
+                            </span>
                         </div>
+                        <p class="help is-danger" id="imgNone" style="display: none;">Please provide a link to your image.</p>
                     </div>
 
                     <div class="field">
@@ -129,7 +158,7 @@
                     </div>
                     <br>
                     <div class="control">
-                            <button class="button is-link" id="createAccount">Create</button>
+                            <button class="button is-link" id="createAccount"><p id="buttonText">Create</p></button>
                     </div>
                 </div>
             </div>
