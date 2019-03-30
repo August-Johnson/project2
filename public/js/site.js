@@ -101,8 +101,6 @@ $(document).ready(function () {
         }
         else {
             // If the login info is valid, create an object to send in the post request, containing the login data.
-            console.log(username);
-            console.log(password);
 
             var userLoginData = {
                 usernameData: username,
@@ -113,8 +111,12 @@ $(document).ready(function () {
                 type: "POST",
                 data: userLoginData
             }).then(function (data) {
+                console.log("I ran");
                 console.log(data);
-            })
+                localStorage.setItem("username", data.userName);
+                localStorage.setItem("userID", data.userID);
+                localStorage.setItem("userImage", data.userImage);
+            });
 
         }
     });
