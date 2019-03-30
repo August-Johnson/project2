@@ -78,7 +78,7 @@ $(document).ready(function () {
         "Clean the bathroom until it's spotless!",
         "Do yard work (mow the lawn, trim trees, pick up leaves, etc)",
         "Clean out the fridge",
-        "Wash your car. If you don't own a car, wash someone elses!",
+        "Wash your car. If you don't own a car, wash someone else's!",
         "Shop for groceries"
     ];
 
@@ -111,13 +111,21 @@ $(document).ready(function () {
                 type: "POST",
                 data: userLoginData
             }).then(function (data) {
-                console.log("I ran");
-                console.log(data);
-                localStorage.setItem("username", data.userName);
-                localStorage.setItem("userID", data.userID);
-                localStorage.setItem("userImage", data.userImage);
+                // console.log(data);
 
-                location.replace("./user.html");
+                if (data.userName === undefined) {
+                    console.log("userName is undefined")
+                    alert("Login FAILED")
+                }
+                else {
+                    // Set returned data to local storage for future use. 
+                    localStorage.setItem("username", data.userName);
+                    localStorage.setItem("userID", data.userID);
+                    localStorage.setItem("userImage", data.userImage);
+
+                    location.replace("./user.html");
+                };
+
 
             });
 
