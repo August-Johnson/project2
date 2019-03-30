@@ -1,8 +1,9 @@
 $(document).ready(function () {
+    
     alert("I ran first!");
 
-
     var goalsList = $("#goalsList");
+
 
     $.ajax("/userGoals", {
         type: "GET",
@@ -14,7 +15,7 @@ $(document).ready(function () {
 
 
     function createNewRow(post) {
-        
+
     };
 
     function populateUserGoalsTable() {
@@ -26,13 +27,13 @@ $(document).ready(function () {
         goalsList.append(postsToAdd);
       }
 
-    function getPosts(category) {
-        var categoryString = category || "";
+    function getGoals(user) {
+        var categoryString = user || "";
         if (categoryString) {
           categoryString = "/category/" + categoryString;
         }
-        $.get("/api/posts" + categoryString, function(data) {
-          console.log("Posts", data);
+        $.get("/api/userGoals", function(data) {
+          console.log(data);
           posts = data;
           if (!posts || !posts.length) {
             displayEmpty();
