@@ -104,14 +104,24 @@ $("#loginAccount").on("click", function (event) {
         $('#errorIconPass').css('visibility', 'visible');
     }
     else {
-        // If the login info is valid, create an object to send in the post request, containing the login data.
+         // If the login info is valid, create an object to send in the post request, containing the login data
         var userLoginData = {
             usernameData: username,
             passwordData: password
         }
 
-        $.post("/login", { data: userLoginData }).then(function (results) {
-            // 
+        $.ajax("/login", {
+            type: "POST",
+            data: userLoginData
+        }).then(function (data) {
+            console.log("I ran");
+            console.log(data);
+            localStorage.setItem("username", data.userName);
+            localStorage.setItem("userID", data.userID);
+            localStorage.setItem("userImage", data.userImage);
+
+            location.replace("./user.html");
+
         });
     }
 });
@@ -172,12 +182,28 @@ $("#createAccount").on("click", function (event) {
             goalData: goal
         }
 
-        $.post("/newUser", { data: userCreateData }).then(function (results) {
-            //
-        });
+        var url = "/api/users/" + userCreateData.usernameData;
+        getMethod(url, userCreateData);
     }
 });
 
+
+function getMethod(url, userData) {
+    $.get(url, function (data) {
+        if (data.length > 0) {
+            return alert("Username already exists! Try again");
+        }
+        else {
+            postMethod("/api/newUser", userData);
+        }
+    });
+}
+
+function postMethod(url, newUser) {
+    $.post(url, newUser, function (data) {
+        console.log("New user was created " + data.username);
+    });
+}
 //Message Board Posting
 // $("#postButton").on("click", function(event) {
 //     event.preventDefault();
