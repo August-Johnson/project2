@@ -54,6 +54,15 @@ module.exports = function (app) {
     });
   })
 
+    // Get all Goals for a specific user
+    app.get("/api/userGoals", function (req, res) {
+      db.Goal.findAll({ 
+        
+       }).then(function (dbGoals) {
+        res.json(dbGoals);
+      });
+    })
+
 
 } // module export close
 
