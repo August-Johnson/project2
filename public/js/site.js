@@ -116,6 +116,9 @@ $(document).ready(function () {
                 localStorage.setItem("username", data.userName);
                 localStorage.setItem("userID", data.userID);
                 localStorage.setItem("userImage", data.userImage);
+
+                location.replace("./user.html");
+
             });
 
         }
