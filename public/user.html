@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <!-- Bulma -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet">
 
@@ -19,27 +20,29 @@
 
     <title>User Page</title>
 </head>
+
 <body>
     <!-- Nav Bar -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="user.html">
-            <img src="images/logo_white.png" width="100" height="auto">
+                <img src="images/logo_white.png" width="100" height="auto">
             </a>
-        
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
         </div>
-        
+
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-end">
                 <a class="navbar-item" href="user.html" id="homeGo">
                     My Goals
                 </a>
-            
+
                 <a class="navbar-item" href="community.html" id="communityGo">
                     Community
                 </a>
@@ -68,7 +71,7 @@
 
                     <div class="content is-medium">
                         <h3 class="has-text-centered">Your Goals!</h3>
-                    </div> 
+                    </div>
 
                     <div class="columns">
                         <div class="column is-four-fifths">
@@ -78,19 +81,19 @@
                             </div>
                         </div>
                         <div class="column is-one-fifth">
-                                <a class="button is-danger is-outlined">
-                                    <span>Delete Goal</span>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </a>
-                                <br><br>
-                                <a class="button is-success">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                    <span>Goal Completed!</span>
-                                </a>
+                            <a class="button is-danger is-outlined">
+                                <span>Delete Goal</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </a>
+                            <br><br>
+                            <a class="button is-success">
+                                <span class="icon is-small">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                                <span>Goal Completed!</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -102,5 +105,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Script File -->
     <script src="./js/site.js"></script>
+    <script src="./js/userGoals.js"></script>
 </body>
+
 </html>
