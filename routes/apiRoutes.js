@@ -26,12 +26,12 @@ module.exports = function (app) {
   app.post("/newUser", function (req, res) {
     db.User.findOrCreate({
       where: {
-        username: req.body.userNameData,
-        password: req.body.passwordData,
-        imageURL: req.body.userImageData
+        username: req.body.userNameData
       }
-    }).then(function (createdUser) {
-      console.log(createdUser);
+    }).then(function ([user, created]) {
+      // user is the object created or the the object that was found
+      // Created is a boolean. True = it created a new user because one didn't exist with the name. False = user already existed.
+      console.log(created);
     });
   })
 
