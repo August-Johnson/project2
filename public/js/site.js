@@ -1,8 +1,5 @@
 $(document).ready(function () {
 
-    //This is a test to see if it's calling the site.js correctly
-    //alert('Hey, this works!');
-
     // User Login form
     $("#loginAccount").on("click", function (event) {
         event.preventDefault();
@@ -48,9 +45,6 @@ $(document).ready(function () {
 
                     location.replace("./user.html");
                 };
-
-
-                location.replace("./user.html");
 
             });
         }
@@ -141,5 +135,5 @@ $(document).ready(function () {
     //     var usernamePost = 
     // })
 
-    // End of document.ready
-});
+    
+});// End of document.ready
