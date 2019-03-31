@@ -2,11 +2,6 @@
 /* eslint-disable prettier/prettier */
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
         username: {
             type: DataTypes.STRING,
             allowNull: false,

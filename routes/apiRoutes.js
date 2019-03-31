@@ -30,16 +30,50 @@ module.exports = function (app) {
 
   //Route to create a new user
   app.post("/newUser", function (req, res) {
+    // Finds or creates a user with the username being posted
     db.User.findOrCreate({
+      // defaults are the values being assigned to the new user if they are being created. (username does not need to be included in defaults)
+      defaults: {
+        password: req.body.passwordData,
+        imageURL: req.body.userImageData
+      },
       where: {
-        username: req.body.userNameData
+        username: req.body.usernameData
       }
     }).then(function ([user, created]) {
       // user is the object created or the the object that was found
       // Created is a boolean. True = it created a new user because one didn't exist with the name. False = user already existed.
+
+      // console logging the data in a layout that only shows the relevant data
+      console.log(user.get({
+        plain: true
+      }));
+
+      // Will console log true if a new user object is created, or false if one already exists with that username
       console.log(created);
+
+      // If a new user was created, return an object holding the data we need for local storage.
+      // A new value called created will tell the front end if the user was created or not.
+      if (created) {
+        var createdUser = {
+          "userID": user.id,
+          "userName": user.username,
+          "userImage": user.imageURL,
+          "created": true
+        }
+        res.json(createdUser);
+      }
+      // If a new user was not created, return an object holding only a created value of false.
+      // Don't need to pass any additional information since it wouldn't matter.
+      else {
+        var existingUser = {
+          "created": false
+        }
+        res.json(existingUser);
+      }
+
     });
-  })
+  });
 
   // Get route for retrieving all post from a user BROKEN
   app.get("/api/goals/:id", function (req, res) {
@@ -59,7 +93,7 @@ module.exports = function (app) {
 
   // Get all Users
   app.get("/api/Users", function (req, res) {
-    db.User.findAll({ include: [db.Goal] }).then(function (dbUsers) {
+    db.User.findAll({ include: [db.Goal, db.Message] }).then(function (dbUsers) {
       res.json(dbUsers);
 
     });
@@ -69,6 +103,13 @@ module.exports = function (app) {
   app.get("/api/Goals", function (req, res) {
     db.Goal.findAll({ include: [db.User] }).then(function (dbGoals) {
       res.json(dbGoals);
+    });
+  });
+
+  // Get all Messages
+  app.get("/api/Messages", function (req, res) {
+    db.Goal.findAll({ include: [db.User] }).then(function (dbMessages) {
+      res.json(dbMessages);
     });
   })
 
