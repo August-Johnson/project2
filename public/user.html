@@ -54,53 +54,82 @@
             </div>
         </div>
     </nav>
+
+    <!-- Welcome Message -->
     <div class="container is-fluid">
-        <div class="column is-full" id="goalsHeader">
-            <div class="is-large" id=goalsLogo>Welcome Back, !</div>
+        <div class="column is-full" id="welcomeHeader">
+            <h3 class="text-is-centered" id=welcomeText>WELCOME BACK.</h3>
         </div>
     </div>
+
     <br><br>
 
     <div class="container">
 
         <div class="columns">
+
             <!-- User Goals -->
             <div class="column is-full">
 
                 <div class="box" id="userGoals">
 
-                    <div class="content is-medium">
-                        <h3 class="has-text-centered">Your Goals!</h3>
+                    <div class='card-content is-horizontal-center'>
+                        <figure class="image has-image-centered"><img src="images/yourgoals.png" id="goalsImage"></figure>
                     </div>
 
-                    <div class="columns">
-                        <div class="column is-four-fifths">
-                            <div class="box">
-                                <p id="goalName">Goal Name</p>
-                                <p id="goalDescription">This text describes the goal.</p>
+                    
+                    <div class="box" id="newGoalBox">
+                        <p id="goalName">Quit Smoking</p>
+                        <p id="goalDescription">Quit smoking by reducing the number of cigarettes smoked a day, and replacing with a different and healthier activity, like Yoga. Long term goal will be to go from a pack a day to no longer feeling the need to smoke.</p>
+
+                        <br>
+
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-success" id="completeGoal"><p id="goalButtonText">Goal Completed!</p></button>
                             </div>
-                        </div>
-                        <div class="column is-one-fifth">
-                            <a class="button is-danger is-outlined">
-                                <span>Delete Goal</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-times"></i>
-                                </span>
-                            </a>
-                            <br><br>
-                            <a class="button is-success">
-                                <span class="icon is-small">
-                                    <i class="fas fa-check"></i>
-                                </span>
-                                <span>Goal Completed!</span>
-                            </a>
+                            <div class="control">
+                                <button class="button is-danger" id="deleteGoal"><p id="goalButtonText">Delete Goal</p></button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <!-- Add Goal -->
+        <div class=box id="addGoalBox">
+            <article class="media">
+                <div class="media-content">
+
+                    <div class="field">
+                        <label class="label">Name Your Goal</label>
+                        <input class="input" type="text" placeholder="Goal Name">
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Goal Description</label>
+                        <p class="control">
+                            <textarea class="textarea" placeholder="Add a description of the goal..."></textarea>
+                        </p>
+                    </div>
+                    <div class="level-left">
+                        <div class="level-item">
+                        <button class="button" id="addGoal"><p id="buttonText">ADD GOAL</p></button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <strong>#Goals</strong> was created by Team Ninja Dragons for Coding Bootcamp 2019.
+        </div>
+    </footer>
     <!-- JQuery References -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Script File -->
