@@ -60,7 +60,7 @@ module.exports = function (app) {
 
     db.Goal.findAll({
         where: {
-          id: userID
+          id: req.body.userID
         }
       }).then(function (userGoals) {
         res.json(userGoals);
