@@ -11,14 +11,20 @@ module.exports = function (app) {
       },
       raw: true,
     }).then(function (userInfo) {
-      console.log(userInfo[0]);
-      var loggedUser = {//Create an object of properties to return to client 
-        "userID": userInfo[0].id,
-        "userName": userInfo[0].username,
-        "userImage": userInfo[0].imageURL
-      };
-      console.log("\nUser logged in with ID of: " + userInfo[0].id); //console log on server side
-      res.json(loggedUser); //send array back to browser for use
+      if (userInfo.length === 0) {
+        console.log("User info is undefined");
+        res.json({ userName: undefined });
+      }
+      else {
+        console.log(userInfo[0]);
+        var loggedUser = {//Create an object of properties to return to client 
+          "userID": userInfo[0].id,
+          "userName": userInfo[0].username,
+          "userImage": userInfo[0].imageURL
+        };
+        console.log("\nUser logged in with ID of: " + userInfo[0].id); //console log on server side
+        res.json(loggedUser); //send array back to browser for use
+      }
     });
   });
 

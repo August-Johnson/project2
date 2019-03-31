@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Au98gust98!",
+    "password": "root",
     "database": "hashtag_goals_db",
     "host": "localhost",
     "dialect": "mysql"
