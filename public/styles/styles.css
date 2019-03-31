@@ -1,5 +1,6 @@
 body {
-  background-image: url("../images/background_04.png")
+  background-image: url("../images/background_04.png");
+  background-color: #C822FF;
 }
 
 #logoHeader {
@@ -20,10 +21,10 @@ body {
   margin: auto;
 }
 
-#loginAccount, #createAccount {
-  background: -moz-linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
-  background: -webkit-linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
-  background: linear-gradient(60deg, #C822FF 0%, #1A6DFF 100%);
+#loginAccount, #createAccount, #addGoal, #postButton {
+  background: -moz-linear-gradient(75deg, #C822FF 0%, #1A6DFF 100%);
+  background: -webkit-linear-gradient(75deg, #C822FF 0%, #1A6DFF 100%);
+  background: linear-gradient(75deg, #C822FF 0%, #1A6DFF 100%);
   height: 50px;
 }
 
@@ -36,8 +37,67 @@ body {
 }
 
 #buttonText {
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+#goalName {
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 0.1px;
+}
+
+#goalTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 36px;
+  padding: 20px;
+  letter-spacing: 2px;
+}
+
+#goalButtonText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+  }
+
+#deleteGoal, #completeGoal {
+  height: 40px;
+}
+
+#goalsImage {
+  width: 400px;
+  height: auto;
+}
+
+#createBox, #loginBox, #userGoals, #addGoalBox {
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 15px;
+}
+
+#welcomeText, #communityText {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 36px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgb(120, 120, 120);
+  padding: 50px;
+}
+
+#goalsBox {
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+
+li {
+  color: rgb(0, 0, 0);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 200;
 }
