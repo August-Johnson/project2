@@ -60,6 +60,18 @@ module.exports = function (app) {
     });
   })
 
+  // Get all Goals for a specific user
+  app.get("/api/userGoals", function (req, res) {
+    var userID = localStorage.getItem("userID");
+
+    db.Goal.findAll({
+        where: {
+          id: req.body.userID
+        }
+      }).then(function (userGoals) {
+        res.json(userGoals);
+        });
+      });
 
 } // module export close
 
