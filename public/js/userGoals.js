@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     // alert("I ran first!");
 
-    //targeting the Bulba box containing the goals - ID should correspond
+    //targeting the Bulma box containing the goals - ID should correspond
     var goalsList = $("#goalsList");
     var goals;
 
@@ -27,9 +27,7 @@ $(document).ready(function () {
             populateUserGoalsTable();
         }
         $()
-
     });
-
 
     function displayEmpty() {
         goalsList.empty();
@@ -52,10 +50,13 @@ $(document).ready(function () {
         goalsList.append(goalsToAdd);
     }
 
-    //This is creating new HTML elements... can use jQuery to create the Bulba elements instead?
+    //This is creating new HTML elements... can use jQuery to create the Bulma elements instead?
     function createNewRow(goal) {
         var newPostCard = $("<div>");
-        //use the 
+        //use the correct Bulma elements
+        // |
+        // |
+        // v
         newPostCard.addClass("card");
         var newPostCardHeading = $("<div>");
         newPostCardHeading.addClass("card-header");
@@ -70,10 +71,10 @@ $(document).ready(function () {
         var newPostCategory = $("<h5>");
         newPostCategory.text(goal.category);
         newPostCategory.css({
-          float: "right",
-          "font-weight": "700",
-          "margin-top":
-          "-15px"
+            float: "right",
+            "font-weight": "700",
+            "margin-top":
+                "-15px"
         });
         var newPostCardBody = $("<div>");
         newPostCardBody.addClass("card-body");
@@ -93,9 +94,7 @@ $(document).ready(function () {
         newPostCard.append(newPostCardBody);
         newPostCard.data("post", goal);
         return newPostCard;
-      }
-    
-
+    }
 
 
     function handleGoalDelete() {
