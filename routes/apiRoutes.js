@@ -41,6 +41,18 @@ module.exports = function (app) {
     });
   })
 
+  // Get route for retrieving all post from a user BROKEN
+  app.get("/goals/:id", function (req, res) {
+    db.Goal.findAll({
+      where: {
+        UserId: 1,
+        goalMet: 0
+      }
+    }).then(function (dbGoals) {
+      console.log(dbGoals);
+    });
+  });
+
 
 
   //GET ROUTES
