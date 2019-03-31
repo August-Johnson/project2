@@ -10,16 +10,18 @@ $(document).ready(function () {
     //$(document).on("click", "button.edit", handleGoalEdit);
 
     var userLoginData = {
-        username: localStorage.getItem("username"),
+        // username: localStorage.getItem("username"),
         userID: localStorage.getItem("userID"),
-        userImage: localStorage.getItem("userImage")
+        // userImage: localStorage.getItem("userImage")
     }
+    console.log(userLoginData);
 
     $.ajax("/userGoals", {
         type: "GET",
         data: userLoginData
-    }).then(function (data) {
-        goals = data;
+    }).then(function (goalData) {
+        console.log(goalData)
+        goals = goalData;
         if (!goals || !goals.length) {
             displayEmpty();
         }
