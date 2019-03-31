@@ -15,7 +15,7 @@ $(document).ready(function () {
         userImage: localStorage.getItem("userImage")
     }
 
-    $.ajax("/api/userGoals", {
+    $.ajax("/userGoals", {
         type: "GET",
         data: userLoginData
     }).then(function (data) {
@@ -52,8 +52,10 @@ $(document).ready(function () {
         goalsList.append(goalsToAdd);
     }
 
-    function createNewRow(post) {
+    //This is creating new HTML elements... can use jQuery to create the Bulba elements instead?
+    function createNewRow(goal) {
         var newPostCard = $("<div>");
+        //use the 
         newPostCard.addClass("card");
         var newPostCardHeading = $("<div>");
         newPostCardHeading.addClass("card-header");
@@ -66,7 +68,7 @@ $(document).ready(function () {
         var newPostTitle = $("<h2>");
         var newPostDate = $("<small>");
         var newPostCategory = $("<h5>");
-        newPostCategory.text(post.category);
+        newPostCategory.text(goal.category);
         newPostCategory.css({
           float: "right",
           "font-weight": "700",
@@ -76,9 +78,9 @@ $(document).ready(function () {
         var newPostCardBody = $("<div>");
         newPostCardBody.addClass("card-body");
         var newPostBody = $("<p>");
-        newPostTitle.text(post.title + " ");
-        newPostBody.text(post.body);
-        var formattedDate = new Date(post.createdAt);
+        newPostTitle.text(goal.title + " ");
+        newPostBody.text(goal.body);
+        var formattedDate = new Date(goal.createdAt);
         formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a");
         newPostDate.text(formattedDate);
         newPostTitle.append(newPostDate);
@@ -89,7 +91,7 @@ $(document).ready(function () {
         newPostCardBody.append(newPostBody);
         newPostCard.append(newPostCardHeading);
         newPostCard.append(newPostCardBody);
-        newPostCard.data("post", post);
+        newPostCard.data("post", goal);
         return newPostCard;
       }
     
