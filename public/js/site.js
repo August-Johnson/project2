@@ -161,28 +161,31 @@ $(document).ready(function () {
                 goalData: goal
             }
 
-            var url = "/api/users/" + userCreateData.usernameData;
-            getMethod(url, userCreateData);
+            // Posting to newUser with the create user form values
+            $.ajax("/newUser", {
+                type: "POST",
+                data: userCreateData
+            }).then(function (data) {
+                // 'data' is what is being returned as an object created and defined in apiRoutes
+                console.log(data);
+                // If a new user was successfully created
+                if (data.created) {
+
+                    localStorage.setItem("username", data.userName);
+                    localStorage.setItem("userID", data.userID);
+                    localStorage.setItem("userImage", data.userImage);
+
+                    location.replace("./user.html");
+                }
+                // If there is a user with that username already
+                else {
+                    alert("Username already exists!");
+                }
+
+            });
         }
     });
 
-
-    function getMethod(url, userData) {
-        $.get(url, function (data) {
-            if (data.length > 0) {
-                return alert("Username already exists! Try again");
-            }
-            else {
-                postMethod("/api/newUser", userData);
-            }
-        });
-    }
-
-    function postMethod(url, newUser) {
-        $.post(url, newUser, function (data) {
-            console.log("New user was created " + data.username);
-        });
-    }
     //Message Board Posting
     // $("#postButton").on("click", function(event) {
     //     event.preventDefault();
