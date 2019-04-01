@@ -75,15 +75,16 @@ module.exports = function (app) {
     });
   });
 
-  // Get route for retrieving all post from a user BROKEN
-  app.get("/api/goals/:id", function (req, res) {
+  // Get route for retrieving all post from a user
+  app.get("/api/goals/:UserId", function (req, res) {
     db.Goal.findAll({
       where: {
-        id: req.params.id,
-        goalMet: req.params.goalMet
+        UserId: req.params.UserId,
+        goalMet: false
       }
     }).then(function (dbGoals) {
       console.log(dbGoals);
+      res.json(dbGoals)
     });
   });
 
