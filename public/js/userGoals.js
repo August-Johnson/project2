@@ -14,11 +14,13 @@ $(document).ready(function () {
         userID: localStorage.getItem("userID"),
         // userImage: localStorage.getItem("userImage")
     }
+
+    var userID = parseInt(localStorage.getItem("userID"))
     console.log(userLoginData);
 
-    $.ajax("/userGoals/", {
-        type: "GET",
-        data: userLoginData
+    $.ajax("/api/goals/" + userID, {
+        type: "GET"
+
     }).then(function (goalData) {
         console.log(goalData)
         goals = goalData;
