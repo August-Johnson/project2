@@ -41,6 +41,7 @@ $(document).ready(function () {
             //populateUserGoalsTable(goals);
             // Not finished goal display, just a test for displaying goal data
             for (i = 0; i < goalData.length; i++) {
+                console.log(goals[i].id);
                 var goalHTML = "";
                 goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
                 goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
@@ -147,3 +148,37 @@ $(document).ready(function () {
 $("#logoutGo").on("click", function () {
     localStorage.clear();
 }); 
+
+$("#addGoal").on("click", function(event) {
+    event.preventDefault();
+
+    var goalTitle = $("#goalTitle").val().trim();
+    var goalDescription = $("#goalDescriptionBox").val().trim();
+
+    var userID = localStorage.getItem("userID");
+
+    console.log("Title: " + goalTitle);
+    console.log("Description: " + goalDescription);
+    console.log("userID: " + userID);
+
+    if (goalTitle === "" || goalTitle === undefined || goalTitle === null) {
+        return alert("Goal title field is empty!");
+    } 
+    else if (goalDescription === "" || goalDescription === undefined || goalDescription === null) {
+        return alert("Goal description field is empty!");
+    }
+    else {
+        var newGoal = {
+            goalTitle: goalTitle,
+            goalDescription: goalDescription,
+            userID: userID
+        }
+
+        $.ajax("/api/newGoal", {
+            type: "POST",
+            data: newGoal
+        }).then(function(goalData) {
+            console.log(goalData);
+        });
+    }
+});
