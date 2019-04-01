@@ -1,3 +1,13 @@
+
+/*WARNING*/
+/*WARNING*//*WARNING*//*WARNING*/
+/*WARNING*/
+/*WARNING*//*WARNING*//*WARNING*/
+/*WARNING*/
+
+
+/*DO NOT AUTOFORMAT THIS FILE FOR READABILITY SAKE*/
+
 $(document).ready(function () {
 
     // alert("I ran first!");
@@ -63,51 +73,65 @@ $(document).ready(function () {
         goalsList.append(goalsToAdd);
     }
 
-    //This is creating new HTML elements... can use jQuery to create the Bulma elements instead?
+    //This is creating new HTML elements.
+    //The "goal" being passed in at this stage are the JSON objects of the goals array
     function createNewRow(goal) {
-        var newPostCard = $("<div>");
-        //use the correct Bulma elements
-        // |
-        // |
-        // v
-        newPostCard.addClass("card");
-        var newPostCardHeading = $("<div>");
-        newPostCardHeading.addClass("card-header");
-        var deleteBtn = $("<button>");
-        deleteBtn.text("x");
-        deleteBtn.addClass("delete btn btn-danger");
-        var editBtn = $("<button>");
-        editBtn.text("EDIT");
-        editBtn.addClass("edit btn btn-default");
-        var newPostTitle = $("<h2>");
-        var newPostDate = $("<small>");
-        var newPostCategory = $("<h5>");
-        newPostCategory.text(goal.category);
-        newPostCategory.css({
-            float: "right",
-            "font-weight": "700",
-            "margin-top":
-                "-15px"
-        });
-        var newPostCardBody = $("<div>");
-        newPostCardBody.addClass("card-body");
-        var newPostBody = $("<p>");
-        newPostTitle.text(goal.title + " ");
-        newPostBody.text(goal.body);
-        var formattedDate = new Date(goal.createdAt);
-        formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a");
-        newPostDate.text(formattedDate);
-        newPostTitle.append(newPostDate);
-        newPostCardHeading.append(deleteBtn);
-        newPostCardHeading.append(editBtn);
-        newPostCardHeading.append(newPostTitle);
-        newPostCardHeading.append(newPostCategory);
-        newPostCardBody.append(newPostBody);
-        newPostCard.append(newPostCardHeading);
-        newPostCard.append(newPostCardBody);
-        newPostCard.data("post", goal);
-        return newPostCard;
-    }
+          //use the correct Bulma elements
+            // |
+            // |
+            // v
+        var newGoalCard = $("<div>");
+        newGoalCard.addClass("box newGoalBox");
+
+        //Sindy be sure to change the CSS elements to reflect these added classes instead of the IDs
+        var newGoalName = $("<p>");
+        newGoalName.addClass("goalName");
+        newGoalName.text(goal.name);
+
+        var newGoalDescription = $("<p>");
+        newGoalDescription.addClass("goalDescription");
+        newGoalDescription.text(goal.description);
+
+        var newGoalBreakBetweenDescriptionAndButtons = $("<br>");
+
+        var newGoalButtonGroup = $("<div>");
+        newGoalButtonGroup.addClass("field is-grouped");
+
+            var newGoalSuccessButtonControlDiv = $("<div>");
+            newGoalSuccessButtonControlDiv.addClass("control");
+
+                var newGoalSuccessButton = $("<button>");
+                newGoalSuccessButton.addClass("button is-success");
+
+                var newGoalSuccessButtonText = $("<p>");
+                newGoalSuccessButtonText.addClass("completeButtonText");
+                newGoalSuccessButtonText.text("Goal Completed!");
+
+            var newGoalDeleteButtonControlDiv = $("<div>");
+            newGoalDeleteButtonControlDiv.addClass("control");
+
+                var newGoalDeleteButton = $("<button>");
+                newGoalDeleteButton.addClass("button is-danger");
+
+                var newGoalDeleteButtonText = $("<p>");
+                newGoalDeleteButtonText.addClass("deleteButtonText");
+                newGoalDeleteButtonText.text("Goal deleted. That's unfortunate.");
+
+//Next append all the created elements in order that they are nested.
+            newGoalCard.append(newGoalName);
+            newGoalCard.append(newGoalDescription);
+            newGoalCard.append(newGoalBreakBetweenDescriptionAndButtons);
+            newGoalCard.append(newGoalButtonGroup);
+
+//then the buttons
+            newGoalButtonGroup.append(newGoalSuccessButtonControlDiv);
+            newGoalSuccessButtonControlDiv.append(newGoalSuccessButton);
+
+            newGoalButtonGroup.append(newGoalDeleteButtonControlDiv);
+            newGoalDeleteButtonControlDiv.append(newGoalDeleteButton);
+            
+    return newGoalCard;
+    };
 
 
     function handleGoalDelete() {
