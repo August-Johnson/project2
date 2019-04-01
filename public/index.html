@@ -193,6 +193,57 @@
         <br>
         <br>
     </div>
+    
+    <!-- Username Taken Modal (Change class 'is-active' in js file) -->
+    <div class="modal" id="usernameModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+            <p class="modal-card-title" id="modalHeader" style="font-size: 24px; font-family: 'Montserrat', sans-serif; font-weight: 200; letter-spacing: 2px; padding: 30px;">USERNAME ALREADY EXISTS.</p>
+            </header>
+            <section class="modal-card-body">
+                <div class="content has-image-centered">
+                    <img src="images/Unavailable.svg" style="width: 400px; padding-left: 200px;">
+                </div>
+                <p class="content has-text-centered" id="modalBody">
+                    The username you entered has already been taken.
+                    <br> <br>
+                    Please choose another one!
+                </p>
+                <br>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success is-right">OK</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Username and Password don't match (Change class 'is-active' in js file) -->
+    <div class="modal" id="noMatchModal">
+        <div class="modal-background"></div>
+        <div class="modal-card" style="width: 700px;">
+            <header class="modal-card-head">
+            <p class="modal-card-title" id="modalHeader" style="font-size: 24px; font-family: 'Montserrat', sans-serif; font-weight: 200; letter-spacing: 2px; padding: 30px;">USERNAME AND PASSWORD DON'T MATCH.</p>
+            </header>
+            <section class="modal-card-body">
+                <div class="content has-image-centered">
+                    <img src="images/noMatch.svg" style="width: 400px; padding-left: 250px;">
+                </div>
+                <br>
+                <p class="content has-text-centered" id="modalBody">
+                    The username/password combination you entered does not match our records.
+                    <br> <br>
+                    Please try again.
+                </p>
+                <br>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">OK</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="content has-text-centered">
             <strong>#Goals</strong> was created by Team Ninja Dragons for Coding Bootcamp 2019.

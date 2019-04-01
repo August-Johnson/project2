@@ -1,6 +1,5 @@
 body {
   background-image: url("../images/background_04.png");
-  background-color: #C822FF;
 }
 
 #logoHeader {
@@ -87,6 +86,7 @@ body {
   letter-spacing: 2px;
   color: rgb(120, 120, 120);
   padding: 50px;
+  margin-top: 20px;
 }
 
 #goalsBox {
@@ -100,4 +100,15 @@ li {
   color: rgb(0, 0, 0);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 200;
+}
+
+/* Modal Styling */
+
+#modalHeader {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600px;
+}
+
+#modalBody {
+  font-size: 20px;
 }
