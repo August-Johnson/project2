@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    localStorage.clear();
 
     // User Login form
     $("#loginAccount").on("click", function (event) {
@@ -138,5 +139,5 @@ $(document).ready(function () {
     //     var usernamePost = 
     // })
 
-    
+
 });// End of document.ready

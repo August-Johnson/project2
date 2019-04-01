@@ -76,16 +76,23 @@ module.exports = function (app) {
   });
 
   // Get route for retrieving all post from a user
-  app.get("/userGoals/", function (req, res) {
+  app.get("/api/goals/:UserId", function (req, res) {
     db.Goal.findAll({
       where: {
-        UserId: parseInt(req.body.userID),
+        UserId: req.params.UserId,
         goalMet: false
-      },
-      raw: true,
+      }
     }).then(function (dbGoals) {
-      console.log(dbGoals);
-      res.json(dbGoals)
+      var dbGoalsArray = [];
+      for (var i = 0; i < dbGoals.length; i++) {
+        dbGoalsArray.push({
+          id: dbGoals[i].id,
+          title: dbGoals[i].title,
+          description: dbGoals[i].description,
+          category: dbGoals[i].category
+        })
+      };
+      res.json(dbGoalsArray)
     });
   });
 
