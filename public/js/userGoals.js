@@ -16,7 +16,7 @@ $(document).ready(function () {
     }
     console.log(userLoginData);
 
-    $.ajax("/userGoals", {
+    $.ajax("/userGoals/", {
         type: "GET",
         data: userLoginData
     }).then(function (goalData) {

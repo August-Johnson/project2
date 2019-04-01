@@ -76,12 +76,13 @@ module.exports = function (app) {
   });
 
   // Get route for retrieving all post from a user
-  app.get("/api/goals/:UserId", function (req, res) {
+  app.get("/userGoals/", function (req, res) {
     db.Goal.findAll({
       where: {
-        UserId: req.params.UserId,
+        UserId: parseInt(req.body.userID),
         goalMet: false
-      }
+      },
+      raw: true,
     }).then(function (dbGoals) {
       console.log(dbGoals);
       res.json(dbGoals)
