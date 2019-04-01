@@ -3,7 +3,7 @@ $(document).ready(function () {
     // alert("I ran first!");
 
     //targeting the Bulma box containing the goals - ID should correspond
-    var goalsList = $("#userGoals");
+    var goalsList = $("#userGoals"); // changed from #goalsList
     var goals;
 
     $(document).on("click", "button.delete", handleGoalDelete);
@@ -29,6 +29,7 @@ $(document).ready(function () {
         }
         else {
             //populateUserGoalsTable(goals);
+            // Not finished goal display, just a test for displaying goal data
             for (i = 0; i < goalData.length; i++) {
                 var goalHTML = "";
                 goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
