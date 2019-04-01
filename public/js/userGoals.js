@@ -3,7 +3,7 @@ $(document).ready(function () {
     // alert("I ran first!");
 
     //targeting the Bulma box containing the goals - ID should correspond
-    var goalsList = $("#goalsList");
+    var goalsList = $("#userGoals");
     var goals;
 
     $(document).on("click", "button.delete", handleGoalDelete);
@@ -22,13 +22,21 @@ $(document).ready(function () {
         type: "GET"
 
     }).then(function (goalData) {
-        console.log(goalData)
+        console.log(goalData);
         goals = goalData;
-        if (!goals || !goals.length) {
+        if (!goals || goals.length <= 0) {
             displayEmpty();
         }
         else {
-            populateUserGoalsTable();
+            //populateUserGoalsTable(goals);
+            for (i = 0; i < goalData.length; i++) {
+                var goalHTML = "";
+                goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
+                goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
+                goalHTML.append($("<p>Description: " + goals[i].description + "<p>"));
+                goalHTML.append($("<h3>Category: " + goals[i].category + "</h3><br />"));
+                goalsList.append(goalHTML);
+            }
         }
         $()
     });
@@ -45,7 +53,7 @@ $(document).ready(function () {
 
     };
 
-    function populateUserGoalsTable() {
+    function populateUserGoalsTable(goals) {
         goalsList.empty();
         var goalsToAdd = [];
         for (var i = 0; i < goals.length; i++) {

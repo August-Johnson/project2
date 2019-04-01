@@ -123,7 +123,7 @@ module.exports = function (app) {
   })
 
   // Get all Goals for a specific user
-  app.get("/api/userGoals", function (req, res) {
+    app.get("/api/userGoals", function (req, res) {
     console.log(req.body);
 
     db.Goal.findAll({
@@ -132,8 +132,8 @@ module.exports = function (app) {
       }
     }).then(function (userGoals) {
       // res.json(userGoals);
-      console.log(userGoals)
-      res.json({ error: err })
+      console.log(userGoals);
+      res.json(userGoals);
     });
   });
 

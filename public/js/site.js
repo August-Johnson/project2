@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    localStorage.clear();
+    // localStorage.clear();
 
     // User Login form
     $("#loginAccount").on("click", function (event) {
