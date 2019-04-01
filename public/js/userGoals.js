@@ -13,28 +13,41 @@ $(document).ready(function () {
     // alert("I ran first!");
 
     //targeting the Bulma box containing the goals - ID should correspond
-    var goalsList = $("#goalsList");
+    var goalsList = $("#userGoals"); // changed from #goalsList
     var goals;
 
     $(document).on("click", "button.delete", handleGoalDelete);
     //$(document).on("click", "button.edit", handleGoalEdit);
 
     var userLoginData = {
-        username: localStorage.getItem("username"),
+        // username: localStorage.getItem("username"),
         userID: localStorage.getItem("userID"),
-        userImage: localStorage.getItem("userImage")
+        // userImage: localStorage.getItem("userImage")
     }
 
-    $.ajax("/userGoals", {
-        type: "GET",
-        data: userLoginData
-    }).then(function (data) {
-        goals = data;
-        if (!goals || !goals.length) {
+    var userID = parseInt(localStorage.getItem("userID"))
+    console.log(userLoginData);
+
+    $.ajax("/api/goals/" + userID, {
+        type: "GET"
+
+    }).then(function (goalData) {
+        console.log(goalData);
+        goals = goalData;
+        if (!goals || goals.length <= 0) {
             displayEmpty();
         }
         else {
-            populateUserGoalsTable();
+            //populateUserGoalsTable(goals);
+            // Not finished goal display, just a test for displaying goal data
+            for (i = 0; i < goalData.length; i++) {
+                var goalHTML = "";
+                goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
+                goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
+                goalHTML.append($("<p>Description: " + goals[i].description + "<p>"));
+                goalHTML.append($("<h3>Category: " + goals[i].category + "</h3><br />"));
+                goalsList.append(goalHTML);
+            }
         }
         $()
     });
@@ -43,7 +56,7 @@ $(document).ready(function () {
         goalsList.empty();
         var messageH2 = $("<h2>");
         messageH2.css({ "text-align": "center", "margin-top": "50px" });
-        messageH2.html("You've got not goals... sad.");
+        messageH2.html("You've got no goals... sad.");
         goalsList.append(messageH2);
     }
 
@@ -51,7 +64,7 @@ $(document).ready(function () {
 
     };
 
-    function populateUserGoalsTable() {
+    function populateUserGoalsTable(goals) {
         goalsList.empty();
         var goalsToAdd = [];
         for (var i = 0; i < goals.length; i++) {
@@ -130,3 +143,7 @@ $(document).ready(function () {
     }
 
 });
+
+$("#logoutGo").on("click", function () {
+    localStorage.clear();
+}); 

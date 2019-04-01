@@ -75,6 +75,27 @@ module.exports = function (app) {
     });
   });
 
+  // Get route for retrieving all post from a user
+  app.get("/api/goals/:UserId", function (req, res) {
+    db.Goal.findAll({
+      where: {
+        UserId: req.params.UserId,
+        goalMet: false
+      }
+    }).then(function (dbGoals) {
+      var dbGoalsArray = [];
+      for (var i = 0; i < dbGoals.length; i++) {
+        dbGoalsArray.push({
+          id: dbGoals[i].id,
+          title: dbGoals[i].title,
+          description: dbGoals[i].description,
+          category: dbGoals[i].category
+        })
+      };
+      res.json(dbGoalsArray)
+    });
+  });
+
 
 
   //GET ROUTES
@@ -102,17 +123,19 @@ module.exports = function (app) {
   })
 
   // Get all Goals for a specific user
-  app.get("/api/userGoals", function (req, res) {
-    var userID = localStorage.getItem("userID");
+    app.get("/api/userGoals", function (req, res) {
+    console.log(req.body);
 
     db.Goal.findAll({
-        where: {
-          id: req.body.userID
-        }
-      }).then(function (userGoals) {
-        res.json(userGoals);
-        });
-      });
+      where: {
+        UserId: req.body.userID
+      }
+    }).then(function (userGoals) {
+      // res.json(userGoals);
+      console.log(userGoals);
+      res.json(userGoals);
+    });
+  });
 
 } // module export close
 
