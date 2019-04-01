@@ -83,8 +83,16 @@ module.exports = function (app) {
         goalMet: false
       }
     }).then(function (dbGoals) {
-      console.log(dbGoals);
-      res.json(dbGoals)
+      var dbGoalsArray = [];
+      for (var i = 0; i < dbGoals.length; i++) {
+        dbGoalsArray.push({
+          id: dbGoals[i].id,
+          title: dbGoals[i].title,
+          description: dbGoals[i].description,
+          category: dbGoals[i].category
+        })
+      };
+      res.json(dbGoalsArray)
     });
   });
 

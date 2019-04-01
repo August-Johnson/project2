@@ -110,3 +110,7 @@ $(document).ready(function () {
     }
 
 });
+
+$("#logoutGo").on("click", function () {
+    localStorage.clear();
+}); 
