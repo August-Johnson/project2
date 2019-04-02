@@ -101,21 +101,42 @@ module.exports = function (app) {
   //GET ROUTES
 
   //Wall of FAME
-  // Get all Goals
   app.get("/api/fame", function (req, res) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
       var wallFame = [];
       for (var i = 0; i < dbUser.length; i++) {
-        var famescore = dbUser[i].goalsMade / dbUser[i].goalsSucceeded;
+        var famescore = (dbUser[i].goalsMade / dbUser[i].goalsSucceeded).toFixed(1);
         wallFame.push({
           id: dbUser[i].id,
           score: famescore
-        })
+        });
       }
+      wallFame.sort(function (a, b) {
+        return parseFloat(a.score - b.score)
+      });
       res.json(wallFame);
+      //for loop to send top five only
     });
   });
 
+
+  //Wall of SHAME
+  app.get("/api/shame", function (req, res) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+      var wallShame = [];
+      for (var i = 0; i < dbUser.length; i++) {
+        var shamescore = (dbUser[i].goalsMade / dbUser[i].goalsSucceeded).toFixed(1);
+        wallShame.push({
+          id: dbUser[i].id,
+          score: shamescore
+        })
+      }
+      wallShame.sort(function (a, b) {
+        return parseFloat(b.score - a.score)
+      });
+      res.json(wallShame);
+    });
+  });
   // Update goal
   app.put("/api/goal/:goalId", function (req, res) {
     db.Goal.update({
