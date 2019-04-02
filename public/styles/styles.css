@@ -30,9 +30,19 @@ body {
 .navbar {
   background-color: #1A6DFF;
 }
+.navbar-burger {
+  background-color: #C822FF;
+}
 
+.navbar-burger-dropdown {
+background-color: #1A6DFF;
+}
 .navbar-item {
   color: #ffffff;
+}
+
+.navbar-dropdown {
+  background-color: grey;
 }
 
 #buttonText {
@@ -130,4 +140,8 @@ li {
 
 #wholeMessage {
   background-image: url("../images/tiny-squares.png");
+}
+
+.navbar-end {
+  background-color: #777777;
 }
