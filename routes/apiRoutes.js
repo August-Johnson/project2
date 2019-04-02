@@ -100,6 +100,25 @@ module.exports = function (app) {
 
   //GET ROUTES
 
+// Update goal
+app.put("/api/goal/:goalId", function(req, res) {
+  db.Goal.update({
+    goalMet: true
+  }, {
+    where: {
+      id: req.params.goalId
+    }
+  }).then(function(data) {
+    res.json(data);
+  });
+});
+
+// Delete goal
+
+
+
+
+
   // Get all Users
   app.get("/api/Users", function (req, res) {
     db.User.findAll({ include: [db.Goal, db.Message] }).then(function (dbUsers) {
@@ -145,9 +164,18 @@ module.exports = function (app) {
       description: req.body.goalDescription,
       UserId: req.body.userID
       }).then(function(data) {
+
+        addGoal(req.body.userID);
+
       res.json(data);
     });
   });
+
+
+  function addGoal(userId) {
+    db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
+  }
+
 
 } // module export close
 
