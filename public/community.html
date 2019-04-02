@@ -64,6 +64,7 @@
     <div class="container">
 
         <div class="columns">
+
             <!-- Top Ten Champions -->
             <div class="column is-half">
 
@@ -90,13 +91,14 @@
                     </div>
                 </div> <!-- Box End -->
             </div>
+
             <!-- Top Ten Slackers -->
             <div class="column is-half">
 
                 <div class="box" id="slackerBox">
                     <div class="content is-medium">
                         <h3 class="has-text-centered">Top Ten Slackers</h3>
-                        <p class="has-text-centered">These users have completed less than 50% of their goals. SHAME!</p>
+                        <p class="has-text-centered">These users have completed less than 60% of their goals. SHAME!</p>
                     </div>
                     <div class="box">
                         <article class="media">
@@ -119,6 +121,7 @@
         </div> <!-- Columns End -->
 
         <div class="columns">
+
             <!-- Message Box -->
             <div class="column is-full">
                 <div class="box">
@@ -128,11 +131,13 @@
                     </div>
 
                     <div id="postedMessages">
+
                         <!-- This is the div that will be created with each post -->
                         <div class="box">
                             <article class="media">
                                 <div class="media-left">
                                     <figure class="image is-128x128">
+
                                     <!-- Replace link with user's profile photo -->
                                     <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
                                     </figure>
@@ -156,33 +161,34 @@
                                 </div>
                             </article>
                         </div>
+
+                        <!-- Post a Message -->
+                        <div id="postMessageBox">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img src="https://bulma.io/images/placeholders/128x128.png">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="field">
+                                        <label class="label">Your Name</label>
+                                        <input class="input" id="postName" type="text" placeholder="Enter Name">
+                                    </div>
+                                    <div class="field">
+                                        <label class="label">Message</label>
+                                        <p class="control">
+                                            <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                                        </p>
+                                    </div>
+                                    <button class="button" id="postButton"><p id="buttonText">POST MESSAGE</p></button>
+                                </div>
+                            </article>
+                        </div>
                     </div>
                 </div> <!-- Box End -->
             </div> <!-- Full Columnn End-->
         </div> <!-- Columns End -->
-        <!-- Add a Message -->
-        <div class="box">
-            <article class="media">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img src="https://bulma.io/images/placeholders/128x128.png">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="field">
-                        <label class="label">Your Name</label>
-                        <input class="input" id="postName" type="text" placeholder="Enter Name">
-                    </div>
-                    <div class="field">
-                        <label class="label">Message</label>
-                        <p class="control">
-                            <textarea class="textarea" placeholder="Add a comment..."></textarea>
-                        </p>
-                    </div>
-                    <button class="button" id="postButton"><p id="buttonText">POST MESSAGE</p></button>
-                </div>
-            </article>
-        </div>
     </div> <!-- Container End -->
     <br>
     <br>

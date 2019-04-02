@@ -74,7 +74,7 @@ body {
   height: auto;
 }
 
-#createBox, #loginBox, #userGoals, #addGoalBox {
+#createBox, #loginBox, #userGoals, #addGoalBox, #championsBox, #slackerBox {
   border: 1px solid rgb(208, 208, 208);
   border-radius: 15px;
 }
@@ -111,4 +111,13 @@ li {
 
 #modalBody {
   font-size: 20px;
+}
+
+#postMessageBox {
+  padding: 30px;
+  background-color: #ffffff;
+}
+
+#wholeMessage {
+  background-image: url("../images/tiny-squares.png");
 }
