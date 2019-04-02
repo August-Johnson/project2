@@ -17,6 +17,7 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "materialize-css": "^1.0.0-rc.2",
+    "moment": "^2.24.0",
     "mysql2": "^1.6.4",
     "sequelize": "^4.41.2"
   },

@@ -81,7 +81,7 @@
                         <figure class="image has-image-centered"><img src="images/yourgoals.png" id="goalsImage"></figure>
                     </div>
 
-                    
+                    <!-- New Goal Setup -->
                     <div class="box" id="newGoalBox">
                         <p id="goalName">Quit Smoking</p>
                         <p id="goalDescription">Quit smoking by reducing the number of cigarettes smoked a day, and replacing with a different and healthier activity, like Yoga. Long term goal will be to go from a pack a day to no longer feeling the need to smoke.</p>
@@ -114,6 +114,7 @@
                     <div class="field">
                         <label class="label">Goal Description</label>
                         <p class="control">
+
                             <textarea class="textarea" id="goalDescriptionBox" placeholder="Add a description of the goal..."></textarea>
                         </p>
                     </div>
@@ -129,6 +130,34 @@
     <br>
     <br>
     <br>
+
+    <!-- Delete Goal Modal -->
+    <div class="modal is-active" id="deleteGoalModal">
+        <div class="modal-background"></div>
+        <div class="modal-card" style="width: 700px;">
+            <header class="modal-card-head">
+            <p class="modal-card-title" id="modalHeader" style="font-size: 24px; font-family: 'Montserrat', sans-serif; font-weight: 200; letter-spacing: 2px; padding: 30px;">DELETE GOAL?</p>
+            </header>
+            <section class="modal-card-body">
+                <div class="content has-image-centered">
+                    <img src="images/noMatch.svg" style="width: 400px; padding-left: 250px;">
+                </div>
+                <br>
+                <p class="content has-text-centered" id="modalBody">
+                    Are you sure you want to delete this goal?
+                    <br> <br>
+                    Deletion will result in a lowered completion score, risking a chance to be on the #Slacker board.
+                </p>
+                <br>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-link" id="cancelDeleteGoal">CANCEL</button>
+                <button class="button is-danger" id="deleteGoalConfirm">DELETE</button>
+            </footer>
+        </div>
+    </div>
+
+
     <footer class="footer">
         <div class="content has-text-centered animated fadeInDown delay-2s">
             <strong>#Goals</strong> was created by Team Ninja Dragons for Coding Bootcamp 2019.
