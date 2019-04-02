@@ -106,9 +106,13 @@ module.exports = function (app) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
       var wallFame = [];
       for (var i = 0; i < dbUser.length; i++) {
-        dbUser[i].goalsMade / dbUser[i].goalsSucceeded
+        var famescore = dbUser[i].goalsMade / dbUser[i].goalsSucceeded;
+        wallFame.push({
+          id: dbUser[i].id,
+          score: famescore
+        })
       }
-      res.json(dbGoals);
+      res.json(wallFame);
     });
   });
 
