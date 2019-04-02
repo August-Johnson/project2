@@ -28,7 +28,10 @@ $(document).ready(function () {
     var userID = parseInt(localStorage.getItem("userID"))
     console.log(userLoginData);
 
-    $.ajax("/api/goals/" + userID, {
+
+    //   api/goals/ + userID
+
+    $.ajax("/userGoals" , {
         type: "GET"
 
     }).then(function (goalData) {
@@ -38,17 +41,19 @@ $(document).ready(function () {
             displayEmpty();
         }
         else {
-            //populateUserGoalsTable(goals);
+            populateUserGoalsTable(goals);
+
             // Not finished goal display, just a test for displaying goal data
-            for (i = 0; i < goalData.length; i++) {
-                console.log(goals[i].id);
-                var goalHTML = "";
-                goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
-                goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
-                goalHTML.append($("<p>Description: " + goals[i].description + "<p>"));
-                goalHTML.append($("<h3>Category: " + goals[i].category + "</h3><br />"));
-                goalsList.append(goalHTML);
-            }
+
+            // for (i = 0; i < goalData.length; i++) {
+            //     console.log(goals[i].id);
+            //     var goalHTML = "";
+            //     goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
+            //     goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
+            //     goalHTML.append($("<p>Description: " + goals[i].description + "<p>"));
+            //     goalHTML.append($("<h3>Category: " + goals[i].category + "</h3><br />"));
+            //     goalsList.append(goalHTML);
+            // }
         }
         $()
     });
@@ -77,7 +82,8 @@ $(document).ready(function () {
     //This is creating new HTML elements.
     //The "goal" being passed in at this stage are the JSON objects of the goals array
     function createNewRow(goal) {
-          //use the correct Bulma elements
+        console.log(goal);  
+        //use the correct Bulma elements
             // |
             // |
             // v
@@ -132,7 +138,8 @@ $(document).ready(function () {
             newGoalDeleteButtonControlDiv.append(newGoalDeleteButton);
             
     return newGoalCard;
-    };
+    
+};
 
 
     function handleGoalDelete() {

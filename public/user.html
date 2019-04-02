@@ -75,34 +75,36 @@
             <!-- User Goals -->
             <div class="column is-full">
 
-                <div class="box" id="userGoals">
+                <div class="box", id="userGoals">
 
                     <div class='card-content is-horizontal-center'>
                         <figure class="image has-image-centered"><img src="images/yourgoals.png" id="goalsImage"></figure>
                     </div>
 
                     <!-- New Goal Setup -->
-                    <div class="box" id="newGoalBox">
-                        <p id="goalName">Quit Smoking</p>
-                        <p id="goalDescription">Quit smoking by reducing the number of cigarettes smoked a day, and replacing with a different and healthier activity, like Yoga. Long term goal will be to go from a pack a day to no longer feeling the need to smoke.</p>
+                    <div class="box newGoalBox">
+                        <p class="goalName">Quit Smoking</p>
+                        <p class="goalDescription">Quit smoking by reducing the number of cigarettes smoked a day, and replacing with a different and healthier activity, like Yoga. Long term goal will be to go from a pack a day to no longer feeling the need to smoke.</p>
 
                         <br>
 
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-success" id="completeGoal"><p id="goalButtonText">Goal Completed!</p></button>
+                                <button class="button is-success completeGoal"><p class="goalButtonText">Goal Completed!</p></button>
                             </div>
                             <div class="control">
-                                <button class="button is-danger" id="deleteGoal"><p id="goalButtonText">Delete Goal</p></button>
+                                <button class="button is-danger deleteGoal"><p class="goalButtonText">Delete Goal</p></button>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
 
         <!-- Add Goal -->
-        <div class=box id="addGoalBox">
+        <div class="box" id="addGoalBox">
             <article class="media">
                 <div class="media-content">
 
@@ -132,7 +134,7 @@
     <br>
 
     <!-- Delete Goal Modal -->
-    <div class="modal is-active" id="deleteGoalModal">
+    <!-- <div class="modal is-active" id="deleteGoalModal">
         <div class="modal-background"></div>
         <div class="modal-card" style="width: 700px;">
             <header class="modal-card-head">
@@ -155,7 +157,7 @@
                 <button class="button is-danger" id="deleteGoalConfirm">DELETE</button>
             </footer>
         </div>
-    </div>
+    </div> -->
 
 
     <footer class="footer">
