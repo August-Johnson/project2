@@ -35,8 +35,10 @@ $(document).ready(function () {
                 // console.log(data);
 
                 if (data.userName === undefined) {
-                    console.log("userName is undefined")
-                    alert("Login FAILED")
+                    $("#noMatchModal").attr('class', 'modal is-active');
+                    $("#closeModal2").click(function() {
+                        $("#noMatchModal").removeClass("is-active");
+                    });
                 }
                 else {
                     // Set returned data to local storage for future use. 
@@ -123,13 +125,15 @@ $(document).ready(function () {
 
                     location.replace("./user.html");
                 }
-                // If there is a user with that username already
+                // MODAL: Username already exists!
                 else {
-                    alert("Username already exists!");
-                }
-
+                    $("#usernameModal").attr('class', 'modal is-active');
+                    $("#closeModal1").click(function() {
+                        $("#usernameModal").removeClass('is-active');
+                    });
+                };
             });
-        }
+        };
     });
 
     //Message Board Posting
