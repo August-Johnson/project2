@@ -7,7 +7,6 @@
 
 
 /*DO NOT AUTOFORMAT THIS FILE FOR READABILITY SAKE*/
-
 $(document).ready(function () {
 
     // alert("I ran first!");
@@ -38,17 +37,7 @@ $(document).ready(function () {
             displayEmpty();
         }
         else {
-            //populateUserGoalsTable(goals);
-            // Not finished goal display, just a test for displaying goal data
-            for (i = 0; i < goalData.length; i++) {
-                console.log(goals[i].id);
-                var goalHTML = "";
-                goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
-                goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
-                goalHTML.append($("<p>Description: " + goals[i].description + "<p>"));
-                goalHTML.append($("<h3>Category: " + goals[i].category + "</h3><br />"));
-                goalsList.append(goalHTML);
-            }
+            populateUserGoalsTable(goals);
         }
         $()
     });
@@ -103,6 +92,7 @@ $(document).ready(function () {
 
                 var newGoalSuccessButton = $("<button>");
                 newGoalSuccessButton.addClass("button is-success");
+                newGoalSuccessButton.attr("goalId", goal.id);
 
                 var newGoalSuccessButtonText = $("<p>");
                 newGoalSuccessButtonText.addClass("completeButtonText");
@@ -113,6 +103,7 @@ $(document).ready(function () {
 
                 var newGoalDeleteButton = $("<button>");
                 newGoalDeleteButton.addClass("button is-danger");
+                newGoalDeleteButton.attr("goalId", goal.id);
 
                 var newGoalDeleteButtonText = $("<p>");
                 newGoalDeleteButtonText.addClass("deleteButtonText");
@@ -143,12 +134,13 @@ $(document).ready(function () {
         deletePost(currentPost.id);
     }
 
-});
+
 
 $("#logoutGo").on("click", function () {
     localStorage.clear();
 }); 
 
+// Add goal
 $("#addGoal").on("click", function(event) {
     event.preventDefault();
 
@@ -181,4 +173,16 @@ $("#addGoal").on("click", function(event) {
             console.log(goalData);
         });
     }
+});
+
+// class for delete buttons = goalDeleteButton
+
+// Update goal / mark as complete
+$(document).on("click", "goalCompleteButton", function() {
+    var goalId = $(this).attr();
+    console.log(goalId);
+
+    // ajax put request
+});
+
 });

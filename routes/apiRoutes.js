@@ -171,8 +171,32 @@ app.put("/api/goal/:goalId", function(req, res) {
     });
   });
 
+  // Goal completed
+  app.put("/api/goals/:goalId", function(req, res) {
 
+    db.Goal.update({
+      goalMet: true
+      },
+      {
+      where: {
+        id: req.params.goalId
+      }
+      }).then(function(data) {
+        console.log(data[i].UserId);
+        // goalMet(req.params.goalId);
+
+      res.json(data);
+    });
+  });
+
+  // Increment goalsMade by one for user
   function addGoal(userId) {
+    db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
+  }
+
+
+  // Increments goalsSucceeded by one for the user
+  function goalMet(goalId) {
     db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
   }
 
