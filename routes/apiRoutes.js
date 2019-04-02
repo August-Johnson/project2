@@ -137,6 +137,18 @@ module.exports = function (app) {
     });
   });
 
+  // New goal request to database
+  app.post("/api/newGoal", function(req, res) {
+
+    db.Goal.create({
+      title: req.body.goalTitle,
+      description: req.body.goalDescription,
+      UserId: req.body.userID
+      }).then(function(data) {
+      res.json(data);
+    });
+  });
+
 } // module export close
 
 //   //http://docs.sequelizejs.com/manual/models-usage.html#-code-findorcreate--code----search-for-a-specific-element-or-create-it-if-not-available
