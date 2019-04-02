@@ -15,7 +15,7 @@ module.exports = function (app) {
 
     db.Goal.findAll({
       where: {
-        id: req.body.userID
+        userID: req.params.userID
       },
       raw: true,
     }).then(function (userGoals) {
