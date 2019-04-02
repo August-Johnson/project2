@@ -24,12 +24,15 @@ $(document).ready(function () {
         // userImage: localStorage.getItem("userImage")
     }
 
-    var userID = parseInt(localStorage.getItem("userID"))
+    //var userID = parseInt(localStorage.getItem("userID"))
     console.log(userLoginData);
 
-    $.ajax("/api/goals/" + userID, {
-        type: "GET"
 
+    
+
+    $.ajax("/api/goals/" + userLoginData.userID , {
+        type: "GET",
+        // data: userLoginData
     }).then(function (goalData) {
         console.log(goalData);
         goals = goalData;
@@ -38,9 +41,11 @@ $(document).ready(function () {
         }
         else {
             populateUserGoalsTable(goals);
+
         }
         $()
     });
+
 
     function displayEmpty() {
         goalsList.empty();
@@ -66,7 +71,8 @@ $(document).ready(function () {
     //This is creating new HTML elements.
     //The "goal" being passed in at this stage are the JSON objects of the goals array
     function createNewRow(goal) {
-          //use the correct Bulma elements
+        console.log(goal);  
+        //use the correct Bulma elements
             // |
             // |
             // v
@@ -76,7 +82,7 @@ $(document).ready(function () {
         //Sindy be sure to change the CSS elements to reflect these added classes instead of the IDs
         var newGoalName = $("<p>");
         newGoalName.addClass("goalName");
-        newGoalName.text(goal.name);
+        newGoalName.text(goal.title);
 
         var newGoalDescription = $("<p>");
         newGoalDescription.addClass("goalDescription");
@@ -107,7 +113,7 @@ $(document).ready(function () {
 
                 var newGoalDeleteButtonText = $("<p>");
                 newGoalDeleteButtonText.addClass("deleteButtonText");
-                newGoalDeleteButtonText.text("Goal deleted. That's unfortunate.");
+                newGoalDeleteButtonText.text("I give up.");
 
 //Next append all the created elements in order that they are nested.
             newGoalCard.append(newGoalName);
@@ -118,12 +124,15 @@ $(document).ready(function () {
 //then the buttons
             newGoalButtonGroup.append(newGoalSuccessButtonControlDiv);
             newGoalSuccessButtonControlDiv.append(newGoalSuccessButton);
+            newGoalSuccessButton.append(newGoalSuccessButtonText);
 
             newGoalButtonGroup.append(newGoalDeleteButtonControlDiv);
             newGoalDeleteButtonControlDiv.append(newGoalDeleteButton);
+            newGoalDeleteButton.append(newGoalDeleteButtonText);
             
     return newGoalCard;
-    };
+    
+};
 
 
     function handleGoalDelete() {

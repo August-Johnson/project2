@@ -30,9 +30,19 @@ body {
 .navbar {
   background-color: #1A6DFF;
 }
+.navbar-burger {
+  background-color: #C822FF;
+}
 
+.navbar-burger-dropdown {
+background-color: #1A6DFF;
+}
 .navbar-item {
   color: #ffffff;
+}
+
+.navbar-dropdown {
+  background-color: grey;
 }
 
 #buttonText {
@@ -43,7 +53,7 @@ body {
   color: #ffffff;
 }
 
-#goalName {
+.goalName {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
@@ -58,16 +68,21 @@ body {
   letter-spacing: 2px;
 }
 
-#goalButtonText {
+.goalButtonText {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 0.1px;
   }
 
-#deleteGoal, #completeGoal {
+.deleteGoal {
   height: 40px;
 }
+
+.completeGoal{
+  height: 40px;
+}
+
 
 #goalsImage {
   width: 400px;
@@ -75,6 +90,11 @@ body {
 }
 
 #createBox, #loginBox, #userGoals, #addGoalBox, #championsBox, #slackerBox {
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 15px;
+}
+
+.newGoalBox {
   border: 1px solid rgb(208, 208, 208);
   border-radius: 15px;
 }
@@ -120,4 +140,8 @@ li {
 
 #wholeMessage {
   background-image: url("../images/tiny-squares.png");
+}
+
+.navbar-end {
+  background-color: #777777;
 }
