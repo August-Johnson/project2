@@ -100,6 +100,18 @@ module.exports = function (app) {
 
   //GET ROUTES
 
+  //Wall of FAME
+  // Get all Goals
+  app.get("/api/fame", function (req, res) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+      var wallFame = [];
+      for (var i = 0; i < dbUser.length; i++) {
+        dbUser[i].goalsMade / dbUser[i].goalsSucceeded
+      }
+      res.json(dbGoals);
+    });
+  });
+
   // Get all Users
   app.get("/api/Users", function (req, res) {
     db.User.findAll({ include: [db.Goal, db.Message] }).then(function (dbUsers) {
@@ -123,7 +135,7 @@ module.exports = function (app) {
   })
 
   // Get all Goals for a specific user
-    app.get("/api/userGoals", function (req, res) {
+  app.get("/api/userGoals", function (req, res) {
     console.log(req.body);
 
     db.Goal.findAll({
@@ -138,13 +150,13 @@ module.exports = function (app) {
   });
 
   // New goal request to database
-  app.post("/api/newGoal", function(req, res) {
+  app.post("/api/newGoal", function (req, res) {
 
     db.Goal.create({
       title: req.body.goalTitle,
       description: req.body.goalDescription,
       UserId: req.body.userID
-      }).then(function(data) {
+    }).then(function (data) {
       res.json(data);
     });
   });
