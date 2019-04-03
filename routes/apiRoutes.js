@@ -176,7 +176,6 @@ module.exports = function (app) {
 
   // Get all Goals for a specific user
   app.get("/api/userGoals", function (req, res) {
-    console.log(req.body);
 
     db.Goal.findAll({
       where: {
