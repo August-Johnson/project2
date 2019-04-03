@@ -14,9 +14,11 @@ $(document).ready(function () {
     //targeting the Bulma box containing the goals - ID should correspond
     var goalsList = $("#userGoals"); // changed from #goalsList
     var goals;
+    var userID;
+    var goalId;
 
-    $(document).on("click", "button.delete", handleGoalDelete);
-    //$(document).on("click", "button.edit", handleGoalEdit);
+    // $(document).on("click", "button.delete", handleGoalDelete);
+    // $(document).on("click", "button.edit", handleGoalEdit);
 
     var userLoginData = {
         // username: localStorage.getItem("username"),
@@ -26,25 +28,9 @@ $(document).ready(function () {
 
     //var userID = parseInt(localStorage.getItem("userID"))
     console.log(userLoginData);
-
-
     
-
-    $.ajax("/api/goals/" + userLoginData.userID , {
-        type: "GET",
-        // data: userLoginData
-    }).then(function (goalData) {
-        console.log(goalData);
-        goals = goalData;
-        if (!goals || goals.length <= 0) {
-            displayEmpty();
-        }
-        else {
-            populateUserGoalsTable(goals);
-
-        }
-    
-    });
+    // Calling function that gets the users goals and displays them
+    getUserGoals(userLoginData.userID);
 
 
     function displayEmpty() {
@@ -159,7 +145,7 @@ $("#addGoal").on("click", function(event) {
     var goalTitle = $("#goalTitle").val().trim();
     var goalDescription = $("#goalDescriptionBox").val().trim();
 
-    var userID = localStorage.getItem("userID");
+    userID = localStorage.getItem("userID");
 
     console.log("Title: " + goalTitle);
     console.log("Description: " + goalDescription);
@@ -186,19 +172,56 @@ $("#addGoal").on("click", function(event) {
             data: newGoal
         }).then(function(goalData) {
             console.log(goalData);
+            getUserGoals(userID);
         });
     }
 });
 
+// Function for getting and displaying all goals belonging to the user that is logged in
+// Passing an arguement that will be the userID for the database to reference
+function getUserGoals(userID) {
+    $.ajax("/api/goals/" + userID , {
+        type: "GET"
+    }).then(function (goalData) {
+        console.log(goalData);
+        goals = goalData;
+        if (!goals || goals.length <= 0) {
+            displayEmpty();
+        }
+        else {
+            populateUserGoalsTable(goals);
+        }
+    
+    });
+}
 // class for delete buttons = goalDeleteButton
-
-// Update goal / mark as complete
-$(document).on("click", "goalCompleteButton", function() {
-    var goalId = $(this).attr();
-    console.log(goalId);
+$(document).on("click", "goalDeleteButton", function() {
+    goalId = $(this).attr();
 
     // ajax put request
 
+});
+
+// Update goal / mark as complete
+$(document).on("click", ".goalCompleteButton", function() {
+    goalId = $(this).attr("goalId");
+    alert("goal complete button pressed");
+
+    userID = localStorage.getItem("userID");
+
+    // Passing userID in the PUT request for the database to reference
+    var userData = {
+        userID: userID
+    }
+
+    // ajax put request
+    $.ajax("/api/completeGoal/" + goalId, {
+        type: "PUT",
+        data: userData
+    }).then(function(data) {
+        // Run function to reprint all non-completed goals to the user
+        getUserGoals(userID);
+    });
 });
 
 });

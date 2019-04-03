@@ -100,19 +100,6 @@ module.exports = function (app) {
 
   //GET ROUTES
 
-// Update goal
-app.put("/api/goal/:goalId", function(req, res) {
-  db.Goal.update({
-    goalMet: true
-  }, {
-    where: {
-      id: req.params.goalId
-    }
-  }).then(function(data) {
-    res.json(data);
-  });
-});
-
 // Delete goal
 
 
@@ -165,6 +152,7 @@ app.put("/api/goal/:goalId", function(req, res) {
       UserId: req.body.userID
       }).then(function(data) {
 
+        // Calling function to increment user's goalsMade value
         addGoal(req.body.userID);
 
       res.json(data);
@@ -172,7 +160,7 @@ app.put("/api/goal/:goalId", function(req, res) {
   });
 
   // Goal completed
-  app.put("/api/goals/:goalId", function(req, res) {
+  app.put("/api/completeGoal/:goalId", function(req, res) {
 
     db.Goal.update({
       goalMet: true
@@ -182,8 +170,10 @@ app.put("/api/goal/:goalId", function(req, res) {
         id: req.params.goalId
       }
       }).then(function(data) {
-        console.log(data[i].UserId);
-        // goalMet(req.params.goalId);
+        console.log(data);
+
+        // Calling function to increment the user's goalsSucceeded value
+        goalMet(req.body.userID);
 
       res.json(data);
     });
@@ -194,10 +184,9 @@ app.put("/api/goal/:goalId", function(req, res) {
     db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
   }
 
-
   // Increments goalsSucceeded by one for the user
-  function goalMet(goalId) {
-    db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
+  function goalMet(userId) {
+    db.User.update({ goalsSucceeded: db.sequelize.literal('goalsSucceeded + 1') }, { where: { id: userId } });
   }
 
 
