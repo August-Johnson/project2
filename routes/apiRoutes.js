@@ -62,6 +62,44 @@ module.exports = function (app) {
     });
   });
 
+  //Wall of FAME
+  app.get("/api/fame", function (req, res) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+      var wallFame = [];
+      for (var i = 0; i < dbUser.length; i++) {
+        var famescore = (dbUser[i].goalsMade / dbUser[i].goalsSucceeded).toFixed(1);
+        wallFame.push({
+          id: dbUser[i].id,
+          score: famescore
+        });
+      }
+      wallFame.sort(function (a, b) {
+        return parseFloat(a.score - b.score)
+      });
+      res.json(wallFame);
+      //for loop to send top five only
+    });
+  });
+
+
+  //Wall of SHAME
+  app.get("/api/shame", function (req, res) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+      var wallShame = [];
+      for (var i = 0; i < dbUser.length; i++) {
+        var shamescore = (dbUser[i].goalsMade / dbUser[i].goalsSucceeded).toFixed(1);
+        wallShame.push({
+          id: dbUser[i].id,
+          score: shamescore
+        })
+      }
+      wallShame.sort(function (a, b) {
+        return parseFloat(b.score - a.score)
+      });
+      res.json(wallShame);
+    });
+  });
+
   // POST ROUTES
 
   // Route for login link
