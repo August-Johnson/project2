@@ -43,7 +43,7 @@ $(document).ready(function () {
             populateUserGoalsTable(goals);
 
         }
-        $()
+    
     });
 
 
@@ -97,7 +97,8 @@ $(document).ready(function () {
             newGoalSuccessButtonControlDiv.addClass("control");
 
                 var newGoalSuccessButton = $("<button>");
-                newGoalSuccessButton.addClass("button is-success");
+
+                newGoalSuccessButton.addClass("button is-success goalCompleteButton");
                 newGoalSuccessButton.attr("goalId", goal.id);
 
                 var newGoalSuccessButtonText = $("<p>");
@@ -108,8 +109,10 @@ $(document).ready(function () {
             newGoalDeleteButtonControlDiv.addClass("control");
 
                 var newGoalDeleteButton = $("<button>");
-                newGoalDeleteButton.addClass("button is-danger");
+
+                newGoalDeleteButton.addClass("button is-danger goalDeleteButton");
                 newGoalDeleteButton.attr("goalId", goal.id);
+
 
                 var newGoalDeleteButtonText = $("<p>");
                 newGoalDeleteButtonText.addClass("deleteButtonText");
@@ -174,7 +177,10 @@ $("#addGoal").on("click", function(event) {
             goalDescription: goalDescription,
             userID: userID
         }
+        console.log(newGoal);
 
+
+        //THIS IS THE PARTS THAT'S LOADING WEIRD
         $.ajax("/api/newGoal", {
             type: "POST",
             data: newGoal
@@ -192,6 +198,7 @@ $(document).on("click", "goalCompleteButton", function() {
     console.log(goalId);
 
     // ajax put request
+
 });
 
 });
