@@ -110,7 +110,7 @@ $(document).ready(function () {
             }
 
             // Posting to newUser with the create user form values
-            $.ajax("/newUser", {
+            $.ajax("/api/newUser", {
                 type: "POST",
                 data: userCreateData
             }).then(function (data) {

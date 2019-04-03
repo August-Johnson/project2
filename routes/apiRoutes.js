@@ -8,7 +8,6 @@ module.exports = function (app) {
   app.get("/api/Users", function (req, res) {
     db.User.findAll({ include: [db.Goal, db.Message] }).then(function (dbUsers) {
       res.json(dbUsers);
-
     });
   });
 
@@ -24,7 +23,7 @@ module.exports = function (app) {
     db.Goal.findAll({ include: [db.User] }).then(function (dbMessages) {
       res.json(dbMessages);
     });
-  })
+  });
 
   // Get all Goals for a specific user
     app.get("/api/userGoals", function (req, res) {
@@ -56,7 +55,7 @@ module.exports = function (app) {
           title: dbGoals[i].title,
           description: dbGoals[i].description,
           category: dbGoals[i].category
-        })
+        });
       };
       res.json(dbGoalsArray)
     });
@@ -91,7 +90,7 @@ module.exports = function (app) {
   });
 
   // Route to create a new user
-  app.post("/newUser", function (req, res) {
+  app.post("/api/newUser", function (req, res) {
     // Finds or creates a user with the username being posted
     db.User.findOrCreate({
       // defaults are the values being assigned to the new user if they are being created. (username does not need to be included in defaults)
@@ -137,15 +136,15 @@ module.exports = function (app) {
     });
   });
 
+  // ROUTES FOR GOALS AND USER.HTML PAGE
+
   // New goal request to database
   app.post("/api/newGoal", function(req, res) {
-
     db.Goal.create({
       title: req.body.goalTitle,
       description: req.body.goalDescription,
       UserId: req.body.userID
       }).then(function(data) {
-
         // Calling function to increment user's goalsMade value
         addGoal(req.body.userID);
 
@@ -157,7 +156,6 @@ module.exports = function (app) {
 
   // Goal completed
   app.put("/api/completeGoal/:goalId", function(req, res) {
-
     db.Goal.update({
       goalMet: true
       },
@@ -191,6 +189,36 @@ module.exports = function (app) {
       res.json(data);
     });
   });
+
+
+  // ROUTES FOR MESSAGES AND COMMUNITY.HTML PAGE
+
+  // GET ROUTE FOR MESSAGES 
+  app.get("/api/messages", function(req, res) {
+    db.Message.findAll({include: [db.User]}).then(function(messageData) {
+      
+      console.log(messageData);
+
+      res.json(messageData);
+
+    });
+  });
+
+// MESSAGE POST ROUTE
+  app.post("/api/newMessage", function(req, res) {
+    db.Message.create({
+      name: req.body.messageName,
+      body: req.body.messageBody,
+      UserId: req.body.userID
+    }).then(function(messageData) {
+
+      console.log(messageData);
+
+      res.json(messageData);
+    });
+  });
+
+
 
   // FUNCTIONS FOR INCREMENTING USER GOAL-COUNTING VALUES
 

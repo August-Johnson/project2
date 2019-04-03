@@ -226,4 +226,35 @@ $(document).on("click", ".goalCompleteButton", function() {
     });
 });
 
+
+var messageList; // Equal to the jquery div id target
+    var messages;
+    var userID;
+    var messageId;
+
+    $("#postButton").on("click", function (event) {
+        event.preventDefault();
+
+        var messageTitle = $("#postName").val().trim();
+        var messageBody = $("#postBody").val().trim();
+        userID = localStorage.getItem("userID");
+
+        var messageData = {
+            messageName: messageTitle,
+            messageBody: messageBody,
+            userID: userID
+        }
+
+        // ajax POST request
+        $.ajax("/api/newMessage", {
+            type: "POST",
+            data: messageData
+        }).then(function (data) {
+            console.log(data);
+
+            // Print messages function call (pass 'userID as argument to function)
+            
+        });
+    });
+
 }); // End of document.ready()
