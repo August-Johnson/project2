@@ -5,9 +5,7 @@
 /*WARNING*//*WARNING*//*WARNING*/
 /*WARNING*/
 
-
 /*DO NOT AUTOFORMAT THIS FILE FOR READABILITY SAKE*/
-
 $(document).ready(function () {
 
     // alert("I ran first!");
@@ -15,9 +13,11 @@ $(document).ready(function () {
     //targeting the Bulma box containing the goals - ID should correspond
     var goalsList = $("#userGoals"); // changed from #goalsList
     var goals;
+    var userID;
+    var goalId;
 
-    $(document).on("click", "button.delete", handleGoalDelete);
-    //$(document).on("click", "button.edit", handleGoalEdit);
+    // $(document).on("click", "button.delete", handleGoalDelete);
+    // $(document).on("click", "button.edit", handleGoalEdit);
 
     var userLoginData = {
         // username: localStorage.getItem("username"),
@@ -27,36 +27,9 @@ $(document).ready(function () {
 
     //var userID = parseInt(localStorage.getItem("userID"))
     console.log(userLoginData);
-
-
     
-
-    $.ajax("/api/goals/" + userLoginData.userID , {
-        type: "GET",
-        // data: userLoginData
-    }).then(function (goalData) {
-        console.log(goalData);
-        goals = goalData;
-        if (!goals || goals.length <= 0) {
-            displayEmpty();
-        }
-        else {
-            populateUserGoalsTable(goals);
-
-            // Not finished goal display, just a test for displaying goal data
-
-            // for (i = 0; i < goalData.length; i++) {
-            //     console.log(goals[i].id);
-            //     var goalHTML = "";
-            //     goalHTML = $("<h1>Goal #" + (i + 1) + "</h1><hr>");
-            //     goalHTML.append($("<h2>Title: " + goals[i].title + "</h2>"));
-            //     goalHTML.append($("<p>Description: " + goals[i].description + "<p>"));
-            //     goalHTML.append($("<h3>Category: " + goals[i].category + "</h3><br />"));
-            //     goalsList.append(goalHTML);
-            // }
-        }
-        $()
-    });
+    // Calling function that gets the users goals and displays them
+    getUserGoals(userLoginData.userID);
 
 
     function displayEmpty() {
@@ -109,7 +82,9 @@ $(document).ready(function () {
             newGoalSuccessButtonControlDiv.addClass("control");
 
                 var newGoalSuccessButton = $("<button>");
-                newGoalSuccessButton.addClass("button is-success");
+
+                newGoalSuccessButton.addClass("button is-success goalCompleteButton");
+                newGoalSuccessButton.attr("goalId", goal.id);
 
                 var newGoalSuccessButtonText = $("<p>");
                 newGoalSuccessButtonText.addClass("completeButtonText");
@@ -119,7 +94,10 @@ $(document).ready(function () {
             newGoalDeleteButtonControlDiv.addClass("control");
 
                 var newGoalDeleteButton = $("<button>");
-                newGoalDeleteButton.addClass("button is-danger");
+
+                newGoalDeleteButton.addClass("button is-danger goalDeleteButton");
+                newGoalDeleteButton.attr("goalId", goal.id);
+
 
                 var newGoalDeleteButtonText = $("<p>");
                 newGoalDeleteButtonText.addClass("deleteButtonText");
@@ -144,28 +122,19 @@ $(document).ready(function () {
     
 };
 
-
-    function handleGoalDelete() {
-        var currentGoal = $(this)
-            .parent()
-            .parent()
-            .data("post");
-        deletePost(currentPost.id);
-    }
-
-});
-
+// Logout button
 $("#logoutGo").on("click", function () {
     localStorage.clear();
 }); 
 
+// Add goal
 $("#addGoal").on("click", function(event) {
     event.preventDefault();
 
     var goalTitle = $("#goalTitle").val().trim();
     var goalDescription = $("#goalDescriptionBox").val().trim();
 
-    var userID = localStorage.getItem("userID");
+    userID = localStorage.getItem("userID");
 
     console.log("Title: " + goalTitle);
     console.log("Description: " + goalDescription);
@@ -183,12 +152,78 @@ $("#addGoal").on("click", function(event) {
             goalDescription: goalDescription,
             userID: userID
         }
+        console.log(newGoal);
 
+
+        //THIS IS THE PARTS THAT'S LOADING WEIRD
         $.ajax("/api/newGoal", {
             type: "POST",
             data: newGoal
         }).then(function(goalData) {
             console.log(goalData);
+            getUserGoals(userID);
         });
     }
 });
+
+// Function for getting and displaying all goals belonging to the user that is logged in
+// Passing an arguement that will be the userID for the database to reference
+function getUserGoals(userID) {
+    $.ajax("/api/goals/" + userID , {
+        type: "GET"
+    }).then(function (goalData) {
+        console.log(goalData);
+        goals = goalData;
+        if (!goals || goals.length <= 0) {
+            displayEmpty();
+        }
+        else {
+            populateUserGoalsTable(goals);
+        }
+    
+    });
+}
+
+// DYNAMICALLY CREATED BUTTON CLICK EVENTS
+
+// Delete goal button event
+$(document).on("click", ".goalDeleteButton", function() {
+    goalId = $(this).attr("goalId");
+
+    userID = localStorage.getItem("userID");
+
+    var userData = {
+        userID: userID
+    }
+
+    // ajax delete request
+    $.ajax("/api/deleteGoal/" + goalId, {
+        type: "DELETE",
+        data: userData
+    }).then(function(data) {
+        getUserGoals(userID);
+    });
+});
+
+// Update goal / mark as complete
+$(document).on("click", ".goalCompleteButton", function() {
+    goalId = $(this).attr("goalId");
+
+    userID = localStorage.getItem("userID");
+
+    // Passing userID in the PUT request for the database to reference
+    var userData = {
+        userID: userID
+    }
+
+    // ajax put request
+    $.ajax("/api/completeGoal/" + goalId, {
+        type: "PUT",
+        data: userData
+    }).then(function(data) {
+        // Run function to reprint all non-completed goals to the user
+        getUserGoals(userID);
+    });
+});
+
+}); // End of document.ready()
