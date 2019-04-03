@@ -5,7 +5,6 @@
 /*WARNING*//*WARNING*//*WARNING*/
 /*WARNING*/
 
-
 /*DO NOT AUTOFORMAT THIS FILE FOR READABILITY SAKE*/
 $(document).ready(function () {
 
@@ -123,17 +122,7 @@ $(document).ready(function () {
     
 };
 
-
-    function handleGoalDelete() {
-        var currentGoal = $(this)
-            .parent()
-            .parent()
-            .data("post");
-        deletePost(currentPost.id);
-    }
-
-
-
+// Logout button
 $("#logoutGo").on("click", function () {
     localStorage.clear();
 }); 
@@ -194,18 +183,31 @@ function getUserGoals(userID) {
     
     });
 }
-// class for delete buttons = goalDeleteButton
-$(document).on("click", "goalDeleteButton", function() {
-    goalId = $(this).attr();
 
-    // ajax put request
+// DYNAMICALLY CREATED BUTTON CLICK EVENTS
 
+// Delete goal button event
+$(document).on("click", ".goalDeleteButton", function() {
+    goalId = $(this).attr("goalId");
+
+    userID = localStorage.getItem("userID");
+
+    var userData = {
+        userID: userID
+    }
+
+    // ajax delete request
+    $.ajax("/api/deleteGoal/" + goalId, {
+        type: "DELETE",
+        data: userData
+    }).then(function(data) {
+        getUserGoals(userID);
+    });
 });
 
 // Update goal / mark as complete
 $(document).on("click", ".goalCompleteButton", function() {
     goalId = $(this).attr("goalId");
-    alert("goal complete button pressed");
 
     userID = localStorage.getItem("userID");
 
@@ -224,4 +226,4 @@ $(document).on("click", ".goalCompleteButton", function() {
     });
 });
 
-});
+}); // End of document.ready()
