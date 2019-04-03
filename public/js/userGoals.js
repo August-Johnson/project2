@@ -55,7 +55,7 @@ $(document).ready(function () {
             //     goalsList.append(goalHTML);
             // }
         }
-        $()
+    
     });
 
 
@@ -109,7 +109,7 @@ $(document).ready(function () {
             newGoalSuccessButtonControlDiv.addClass("control");
 
                 var newGoalSuccessButton = $("<button>");
-                newGoalSuccessButton.addClass("button is-success");
+                newGoalSuccessButton.addClass("button is-success goalCompleteButton");
 
                 var newGoalSuccessButtonText = $("<p>");
                 newGoalSuccessButtonText.addClass("completeButtonText");
@@ -119,7 +119,7 @@ $(document).ready(function () {
             newGoalDeleteButtonControlDiv.addClass("control");
 
                 var newGoalDeleteButton = $("<button>");
-                newGoalDeleteButton.addClass("button is-danger");
+                newGoalDeleteButton.addClass("button is-danger goalDeleteButton");
 
                 var newGoalDeleteButtonText = $("<p>");
                 newGoalDeleteButtonText.addClass("deleteButtonText");
@@ -153,7 +153,7 @@ $(document).ready(function () {
         deletePost(currentPost.id);
     }
 
-});
+
 
 $("#logoutGo").on("click", function () {
     localStorage.clear();
@@ -183,12 +183,33 @@ $("#addGoal").on("click", function(event) {
             goalDescription: goalDescription,
             userID: userID
         }
+        console.log(newGoal);
 
+
+        //THIS IS THE PARTS THAT'S LOADING WEIRD
         $.ajax("/api/newGoal", {
             type: "POST",
             data: newGoal
         }).then(function(goalData) {
             console.log(goalData);
-        });
-    }
+            // populateUserGoalsTable(goalData);
+        })
+        
+        .done(
+            $.ajax("/api/goals/" + userID , {
+            type: "GET",
+            // data: userLoginData
+        }).done(function (goalData) {
+            console.log(goalData);
+            goals = goalData;
+            
+                populateUserGoalsTable(goals);
+        })
+        );
+    };
+
+   
+
+});
+
 });
