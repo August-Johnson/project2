@@ -66,17 +66,26 @@ module.exports = function (app) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
       var wallFame = [];
       for (var i = 0; i < dbUser.length; i++) {
-        var famescore = (dbUser[i].goalsSucceeded / dbUser[i].goalsMade).toFixed(1);
-        wallFame.push({
-          id: dbUser[i].id,
-          score: famescore
-        });
+        if (dbUser[i].goalsSucceeded !== 0) {
+          var famescore = (dbUser[i].goalsSucceeded / dbUser[i].goalsMade).toFixed(1);
+          wallFame.push({
+            id: dbUser[i].id,
+            userName: dbUser[i].username,
+            imageUrl: dbUser[i].imageURL,
+            score: famescore
+          });
+        }
       }
       wallFame.sort(function (a, b) {
         return parseFloat(b.score - a.score)
       });
-      res.json(wallFame);
+
       //for loop to send top five only
+      var newWallFame = [];
+      for (i = 0; i < 5; i++) {
+        newWallFame.push(wallFame[i])
+      };
+      res.json(newWallFame);
     });
   });
 
@@ -86,16 +95,26 @@ module.exports = function (app) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
       var wallShame = [];
       for (var i = 0; i < dbUser.length; i++) {
-        var shamescore = (dbUser[i].goalsDeleted / dbUser[i].goalsMade).toFixed(1);
-        wallShame.push({
-          id: dbUser[i].id,
-          score: shamescore
-        })
+        if (dbUser[i].goalsSucceeded !== 0) {
+          var shamescore = (dbUser[i].goalsDeleted / dbUser[i].goalsMade).toFixed(1);
+          wallShame.push({
+            id: dbUser[i].id,
+            userName: dbUser[i].username,
+            imageUrl: dbUser[i].imageURL,
+            score: shamescore
+          })
+        }
       }
       wallShame.sort(function (a, b) {
         return parseFloat(a.score - b.score)
       });
-      res.json(wallShame);
+
+      //for loop to send top five only
+      var newWallShame = [];
+      for (i = 0; i < 5; i++) {
+        newWallShame.push(wallShame[i])
+      };
+      res.json(newWallShame);
     });
   });
 
