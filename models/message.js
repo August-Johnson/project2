@@ -3,12 +3,12 @@ module.exports = function (sequelize, DataTypes) {
     var Message = sequelize.define("Message", {
         name: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
             len: [1]
         },
         body: {
             type: DataTypes.TEXT,
-            allowNull: true,
+            allowNull: false,
             len: [1]
         }
     });

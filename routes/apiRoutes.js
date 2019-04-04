@@ -20,7 +20,7 @@ module.exports = function (app) {
 
   // Get all Messages
   app.get("/api/Messages", function (req, res) {
-    db.Goal.findAll({ include: [db.User] }).then(function (dbMessages) {
+    db.Message.findAll({ include: [db.User] }).then(function (dbMessages) {
       res.json(dbMessages);
     });
   });
@@ -246,7 +246,23 @@ module.exports = function (app) {
     });
   });
 
-// MESSAGE POST ROUTE
+  
+  // GET ALL MESSAGES FOR A SINGLE USER
+  app.get("/api/messages/:userId", function(req, res) {
+    db.Message.findAll({
+      where: {
+        id: req.params.userId
+      }
+    }).then(function(messagesData) {
+
+      console.log(messagesData);
+
+      res.json(messagesData);
+
+    });
+  });
+
+  // MESSAGE POST ROUTE
   app.post("/api/newMessage", function(req, res) {
     db.Message.create({
       name: req.body.messageName,
