@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <!-- Bulma -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
 
@@ -13,43 +14,45 @@
 
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    
+
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="./styles/styles.css" media="screen" title="no title" charset="utf-8">
 
     <title>#Community</title>
 </head>
+
 <body>
     <!-- Nav Bar -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="user.html">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="user.html">
                 <img src="images/logo_white.png" width="100" height="auto">
-                </a>
-            
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                </a>
-            </div>
-            
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-end">
-                    <a class="navbar-item" href="user.html" id="homeGo">
-                        My Goals
-                    </a>
-                
-                    <a class="navbar-item" href="community.html" id="communityGo">
-                        Community
-                    </a>
+            </a>
 
-                    <a class="navbar-item" href="index.html" id="logoutGo">
-                        Log Out
-                    </a>
-                    <br>
-                </div>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="user.html" id="homeGo">
+                    My Goals
+                </a>
+
+                <a class="navbar-item" href="community.html" id="communityGo">
+                    Community
+                </a>
+
+                <a class="navbar-item" href="index.html" id="logoutGo">
+                    Log Out
+                </a>
+                <br>
             </div>
+        </div>
     </nav>
 
     <!-- Header -->
@@ -73,21 +76,23 @@
                         <h3 class="has-text-centered">Top Ten Champions</h3>
                         <p class="has-text-centered">These users have completed over 80% of their goals! Way to go!</p>
                     </div>
-                    <div class="box">
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img src="https://bulma.io/images/placeholders/128x128.png" id="posterProfile">
-                                </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="content">
-                                <p>
-                                    <strong>@username</strong>
-                                </p>
+                    <div id="championUsersBoxes">
+                        <div class="box" class="championUserBox">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img src="https://bulma.io/images/placeholders/128x128.png" id="posterProfile">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>@username</strong>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
                 </div> <!-- Box End -->
             </div>
@@ -100,21 +105,23 @@
                         <h3 class="has-text-centered">Top Ten Slackers</h3>
                         <p class="has-text-centered">These users have completed less than 60% of their goals. SHAME!</p>
                     </div>
-                    <div class="box">
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img src="https://bulma.io/images/placeholders/128x128.png" id="posterProfile">
-                                </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="content">
-                                <p>
-                                    <strong>@username</strong>
-                                </p>
+                    <div id="slackerUsersBoxes">
+                        <div class="box" class="slackerUserBox">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img src="https://bulma.io/images/placeholders/128x128.png" id="posterProfile">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>@username</strong>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,21 +138,22 @@
                     </div>
 
                     <div id="postedMessages">
-
+                        <div id="messagesBoxes">
                         <!-- This is the div that will be created with each post -->
                         <div class="box">
                             <article class="media">
                                 <div class="media-left">
                                     <figure class="image is-128x128">
 
-                                    <!-- Replace link with user's profile photo -->
-                                    <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                                        <!-- Replace link with user's profile photo -->
+                                        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
                                     </figure>
                                 </div>
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong id="exampleName">John Smith</strong> <small id="postUsername">@johnsmith</small> <small id="postTime">31m</small>
+                                            <strong id="postName">John Smith</strong> <small
+                                                id="postUsername">@johnsmith</small> <small id="postTime">31m</small>
                                             <p id="postMessage">This is where the message will get posted!</p>
                                         </p>
                                     </div>
@@ -161,7 +169,7 @@
                                 </div>
                             </article>
                         </div>
-
+</div>
                         <!-- Post a Message -->
                         <div id="postMessageBox">
                             <article class="media">
@@ -181,7 +189,9 @@
                                             <textarea class="textarea" id="postBody" placeholder="Add a comment..."></textarea>
                                         </p>
                                     </div>
-                                    <button class="button" id="postButton"><p id="buttonText">POST MESSAGE</p></button>
+                                    <button class="button" id="postButton">
+                                        <p id="buttonText">POST MESSAGE</p>
+                                    </button>
                                 </div>
                             </article>
                         </div>
@@ -203,7 +213,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Script File -->
     <script src="./js/site.js"></script>
-    <script src="./js/userGoals.js"></script>
-
+    <script src="./js/shameAndFame.js"></script>
 </body>
+
 </html>
