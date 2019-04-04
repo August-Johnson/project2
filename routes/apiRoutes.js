@@ -67,14 +67,14 @@ module.exports = function (app) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
       var wallFame = [];
       for (var i = 0; i < dbUser.length; i++) {
-        var famescore = (dbUser[i].goalsMade / dbUser[i].goalsSucceeded).toFixed(1);
+        var famescore = (dbUser[i].goalsSucceeded / dbUser[i].goalsMade).toFixed(1);
         wallFame.push({
           id: dbUser[i].id,
           score: famescore
         });
       }
       wallFame.sort(function (a, b) {
-        return parseFloat(a.score - b.score)
+        return parseFloat(b.score - a.score)
       });
       res.json(wallFame);
       //for loop to send top five only
@@ -87,14 +87,14 @@ module.exports = function (app) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
       var wallShame = [];
       for (var i = 0; i < dbUser.length; i++) {
-        var shamescore = (dbUser[i].goalsMade / dbUser[i].goalsSucceeded).toFixed(1);
+        var shamescore = (dbUser[i].goalsDeleted / dbUser[i].goalsMade).toFixed(1);
         wallShame.push({
           id: dbUser[i].id,
           score: shamescore
         })
       }
       wallShame.sort(function (a, b) {
-        return parseFloat(b.score - a.score)
+        return parseFloat(a.score - b.score)
       });
       res.json(wallShame);
     });
