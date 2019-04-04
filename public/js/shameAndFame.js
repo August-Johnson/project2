@@ -1,11 +1,4 @@
 
-/*WARNING*/
-/*WARNING*//*WARNING*//*WARNING*/
-/*WARNING*/
-/*WARNING*//*WARNING*//*WARNING*/
-/*WARNING*/
-
-/*DO NOT AUTOFORMAT THIS FILE FOR READABILITY SAKE*/
 $(document).ready(function () {
 
     // alert("I ran first!");
@@ -13,6 +6,7 @@ $(document).ready(function () {
     //targeting the Bulma boxes containing the champions and slackers by the box ID
     var championsList = $("#championUsersBoxes"); // changed from #goalsList
     var slackersList = $("#slackerUsersBoxes");
+    var messagesList = $("messagesBoxes");
     var champions;
     var slackers;
     
@@ -65,7 +59,7 @@ $(document).ready(function () {
         var newUserBox = $("<div>");
         newUserBox.addClass("box");
 
-        var newUserArticle =$("<article>");
+        var newUserArticle = $("<article>");
         newUserArticle.addClass("media");
 
         var newUserFigure =$("<figure>");
@@ -89,24 +83,21 @@ $(document).ready(function () {
         var newUsernameStrong = $("<strong>");
         
 
-        
+
 
 //Next append all the created elements in order that they are nested.
-            newGoalCard.append(newGoalName);
-            newGoalCard.append(newGoalDescription);
-            newGoalCard.append(newGoalBreakBetweenDescriptionAndButtons);
-            newGoalCard.append(newGoalButtonGroup);
+            newUserBox.append(newUserArticle);
 
-//then the buttons
-            newGoalButtonGroup.append(newGoalSuccessButtonControlDiv);
-            newGoalSuccessButtonControlDiv.append(newGoalSuccessButton);
-            newGoalSuccessButton.append(newGoalSuccessButtonText);
+            newUserArticle.append(newUserFigure);
+            newUserFigure.append(newUserP);
+            newUserP.append(newUserImage);
 
-            newGoalButtonGroup.append(newGoalDeleteButtonControlDiv);
-            newGoalDeleteButtonControlDiv.append(newGoalDeleteButton);
-            newGoalDeleteButton.append(newGoalDeleteButtonText);
+            newUserArticle.append(newUsernameDiv);
+            newUsernameDiv.append(newUsernameContentDiv);
+            newUsernameContentDiv.append(newUsernameP);
+            newUsernameP.append(newUsernameStrong);
             
-    return newGoalCard;
+    return newUserBox;
     
 };
 
@@ -172,46 +163,5 @@ function getUserGoals(userID) {
     });
 }
 
-// DYNAMICALLY CREATED BUTTON CLICK EVENTS
-
-// Delete goal button event
-$(document).on("click", ".goalDeleteButton", function() {
-    goalId = $(this).attr("goalId");
-
-    userID = localStorage.getItem("userID");
-
-    var userData = {
-        userID: userID
-    }
-
-    // ajax delete request
-    $.ajax("/api/deleteGoal/" + goalId, {
-        type: "DELETE",
-        data: userData
-    }).then(function(data) {
-        getUserGoals(userID);
-    });
-});
-
-// Update goal / mark as complete
-$(document).on("click", ".goalCompleteButton", function() {
-    goalId = $(this).attr("goalId");
-
-    userID = localStorage.getItem("userID");
-
-    // Passing userID in the PUT request for the database to reference
-    var userData = {
-        userID: userID
-    }
-
-    // ajax put request
-    $.ajax("/api/completeGoal/" + goalId, {
-        type: "PUT",
-        data: userData
-    }).then(function(data) {
-        // Run function to reprint all non-completed goals to the user
-        getUserGoals(userID);
-    });
-});
 
 }); // End of document.ready()
