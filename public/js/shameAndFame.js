@@ -81,8 +81,7 @@ $(document).ready(function () {
 
         var newUsernameP = $("<p>");
         var newUsernameStrong = $("<strong>");
-
-
+        newUsernameStrong.text(user.userName);
 
 
         //Next append all the created elements in order that they are nested.
