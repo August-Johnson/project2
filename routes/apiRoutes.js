@@ -27,7 +27,7 @@ module.exports = function (app) {
   })
 
   // Get all Goals for a specific user
-    app.get("/api/userGoals", function (req, res) {
+  app.get("/api/userGoals", function (req, res) {
     console.log(req.body);
 
     db.Goal.findAll({
@@ -59,6 +59,44 @@ module.exports = function (app) {
         })
       };
       res.json(dbGoalsArray)
+    });
+  });
+
+  //Wall of FAME
+  app.get("/api/fame", function (req, res) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+      var wallFame = [];
+      for (var i = 0; i < dbUser.length; i++) {
+        var famescore = (dbUser[i].goalsSucceeded / dbUser[i].goalsMade).toFixed(1);
+        wallFame.push({
+          id: dbUser[i].id,
+          score: famescore
+        });
+      }
+      wallFame.sort(function (a, b) {
+        return parseFloat(b.score - a.score)
+      });
+      res.json(wallFame);
+      //for loop to send top five only
+    });
+  });
+
+
+  //Wall of SHAME
+  app.get("/api/shame", function (req, res) {
+    db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+      var wallShame = [];
+      for (var i = 0; i < dbUser.length; i++) {
+        var shamescore = (dbUser[i].goalsDeleted / dbUser[i].goalsMade).toFixed(1);
+        wallShame.push({
+          id: dbUser[i].id,
+          score: shamescore
+        })
+      }
+      wallShame.sort(function (a, b) {
+        return parseFloat(a.score - b.score)
+      });
+      res.json(wallShame);
     });
   });
 
@@ -138,16 +176,16 @@ module.exports = function (app) {
   });
 
   // New goal request to database
-  app.post("/api/newGoal", function(req, res) {
+  app.post("/api/newGoal", function (req, res) {
 
     db.Goal.create({
       title: req.body.goalTitle,
       description: req.body.goalDescription,
       UserId: req.body.userID
-      }).then(function(data) {
+    }).then(function (data) {
 
-        // Calling function to increment user's goalsMade value
-        addGoal(req.body.userID);
+      // Calling function to increment user's goalsMade value
+      addGoal(req.body.userID);
 
       res.json(data);
     });
@@ -156,35 +194,35 @@ module.exports = function (app) {
   // PUT ROUTES
 
   // Goal completed
-  app.put("/api/completeGoal/:goalId", function(req, res) {
+  app.put("/api/completeGoal/:goalId", function (req, res) {
 
     db.Goal.update({
       goalMet: true
-      },
+    },
       {
-      where: {
-        id: req.params.goalId
-      }
-      }).then(function(data) {
+        where: {
+          id: req.params.goalId
+        }
+      }).then(function (data) {
         console.log(data);
 
         // Calling function to increment the user's goalsSucceeded value
         goalMet(req.body.userID);
 
-      res.json(data);
-    });
+        res.json(data);
+      });
   });
 
   // DELETE ROUTES
 
   // Goal deleted
-  app.delete("/api/deleteGoal/:goalId", function(req, res) {
+  app.delete("/api/deleteGoal/:goalId", function (req, res) {
     db.Goal.destroy({
       where: {
         id: req.params.goalId
       }
-    }).then(function(data) {
-      
+    }).then(function (data) {
+
       // Calling function to increment user's goalsDeleted value
       goalDeleted(req.body.userID);
 
@@ -210,6 +248,3 @@ module.exports = function (app) {
   }
 
 } // module export close
-
-//   //http://docs.sequelizejs.com/manual/models-usage.html#-code-findorcreate--code----search-for-a-specific-element-or-create-it-if-not-available
-    //=======================================================================================
