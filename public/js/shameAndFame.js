@@ -214,4 +214,38 @@ $(document).on("click", ".goalCompleteButton", function() {
     });
 });
 
+$.ajax("/api/fame",{
+    type: "GET",
+}).then(function(data){
+    console.log(data);
+    var users = data;
+    if (users) {
+        displayEmpty();
+    }
+    else {
+        populateListWithUsers(championsList, users);
+    }
+})
+
+$.ajax("/api/shame",{
+    type: "GET",
+}).then(function(data){
+    console.log(data);
+    var users = data;
+    if (users) {
+        displayEmpty();
+    }
+    else {
+        populateListWithUsers(slackersList, users);
+    }
+})
+
+$.ajax("/api/messages",{
+    type: "GET",
+}).then(function(data){
+    console.log(data);
+})
+
+
+
 }); // End of document.ready()
