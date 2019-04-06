@@ -1,7 +1,6 @@
 $(document).ready(function () {
-    // localStorage.clear();
 
-    // User Login form
+    // User Login form submit event
     $("#loginAccount").on("click", function (event) {
         event.preventDefault();
 
@@ -52,11 +51,11 @@ $(document).ready(function () {
             });
         }
     });
-    // Create user form
+
+    // Create new user form submit event
     $("#createAccount").on("click", function (event) {
         event.preventDefault();
-
-        //
+        
         var username = $("#usernameCreate").val().trim();
         var password = $("#passwordCreate").val().trim();
         var passwordConfirm = $("#passwordConfirm").val().trim();
@@ -110,7 +109,7 @@ $(document).ready(function () {
             }
 
             // Posting to newUser with the create user form values
-            $.ajax("/newUser", {
+            $.ajax("/api/newUser", {
                 type: "POST",
                 data: userCreateData
             }).then(function (data) {
@@ -135,18 +134,12 @@ $(document).ready(function () {
             });
         };
     });
+
     $(".navbar-burger").click(function() {
 
         // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
         $(".navbar-burger").toggleClass("is-active");
         $(".navbar-menu").toggleClass("is-active");
     });
-    //Message Board Posting
-    // $("#postButton").on("click", function(event) {
-    //     event.preventDefault();
-
-    //     var usernamePost = 
-    // })
-
 
 });// End of document.ready

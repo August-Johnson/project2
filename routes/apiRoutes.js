@@ -2,46 +2,65 @@ var db = require("../models");
 
 module.exports = function (app) {
 
-  //GET ROUTES
+  // FUNCTIONS 
 
-  // Get all Users
+  // FUNCTIONS FOR INCREMENTING USER GOAL-COUNTING VALUES
+
+  // Increment goalsMade by one for user
+  function addGoal(userId) {
+    db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
+  }
+
+  // Increments goalsSucceeded by one for the user
+  function goalMet(userId) {
+    db.User.update({ goalsSucceeded: db.sequelize.literal('goalsSucceeded + 1') }, { where: { id: userId } });
+  }
+
+  // Increment goalsDeleted by one for user
+  function goalDeleted(userId) {
+    db.User.update({ goalsDeleted: db.sequelize.literal('goalsDeleted + 1') }, { where: { id: userId } });
+  }
+
+  // ALL GET ROUTES
+
+  // GET ALL USERS
   app.get("/api/Users", function (req, res) {
     db.User.findAll({ include: [db.Goal, db.Message] }).then(function (dbUsers) {
       res.json(dbUsers);
-
     });
   });
 
-  // Get all Goals
+  // GET ALL GOALS
   app.get("/api/Goals", function (req, res) {
     db.Goal.findAll({ include: [db.User] }).then(function (dbGoals) {
       res.json(dbGoals);
     });
   });
 
-  // Get all Messages
+  // GET ALL MESSAGES
   app.get("/api/Messages", function (req, res) {
-    db.Goal.findAll({ include: [db.User] }).then(function (dbMessages) {
+    db.Message.findAll({ include: [db.User] }).then(function (dbMessages) {
       res.json(dbMessages);
     });
-  })
+  });
 
-  // Get all Goals for a specific user
+  /*
+  // GET ALL GOALS FOR SINGLE USER
   app.get("/api/userGoals", function (req, res) {
-    console.log(req.body);
-
     db.Goal.findAll({
       where: {
         UserId: req.body.userID
       }
     }).then(function (userGoals) {
-      // res.json(userGoals);
+
       console.log(userGoals);
       res.json(userGoals);
+
     });
   });
+*/
 
-  // Get route for retrieving all post from a user
+  // GET ALL GOALS FOR THE CURRENT USER LOGGED IN TO DISPLAY ON THEIR PAGE
   app.get("/api/goals/:UserId", function (req, res) {
     db.Goal.findAll({
       where: {
@@ -56,72 +75,122 @@ module.exports = function (app) {
           title: dbGoals[i].title,
           description: dbGoals[i].description,
           category: dbGoals[i].category
-        })
+        });
       };
       res.json(dbGoalsArray)
     });
   });
 
-  //Wall of FAME
+  // GET ROUTE FOR WALL OF FAME
   app.get("/api/fame", function (req, res) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+
       var wallFame = [];
+
       for (var i = 0; i < dbUser.length; i++) {
         if (dbUser[i].goalsSucceeded !== 0) {
           var famescore = (dbUser[i].goalsSucceeded / dbUser[i].goalsMade).toFixed(1);
-          wallFame.push({
-            id: dbUser[i].id,
-            userName: dbUser[i].username,
-            imageUrl: dbUser[i].imageURL,
-            score: famescore
-          });
+
+          // famescore was being returned as a string so I parseFloated it
+          famescore = parseFloat(famescore);
+
+          // Checking if the user has completed 80% or more of the goals they have set
+          if (famescore >= 0.8) {
+
+            wallFame.push({
+              id: dbUser[i].id,
+              userName: dbUser[i].username,
+              imageUrl: dbUser[i].imageURL,
+              score: famescore
+            });
+          }
+
         }
       }
       wallFame.sort(function (a, b) {
-        return parseFloat(b.score - a.score)
+        return parseFloat(b.score - a.score);
       });
 
-      //for loop to send top five only
+      // for loop to send top five only
       var newWallFame = [];
-      for (i = 0; i < 5; i++) {
-        newWallFame.push(wallFame[i])
-      };
+      for (i = 0; i < wallFame.length; i++) {
+        if (newWallFame.length < 5) {
+          newWallFame.push(wallFame[i]);
+        }
+      }
       res.json(newWallFame);
     });
   });
 
-
-  //Wall of SHAME
+  // GET ROUTE FOR WALL OF SHAME
   app.get("/api/shame", function (req, res) {
     db.User.findAll({ include: [db.Goal] }).then(function (dbUser) {
+
       var wallShame = [];
+
       for (var i = 0; i < dbUser.length; i++) {
-        if (dbUser[i].goalsSucceeded !== 0) {
+        if (dbUser[i].goalsSucceeded !== 0 && dbUser[i].goalsDeleted !== 0) {
+
           var shamescore = (dbUser[i].goalsDeleted / dbUser[i].goalsMade).toFixed(1);
-          wallShame.push({
-            id: dbUser[i].id,
-            userName: dbUser[i].username,
-            imageUrl: dbUser[i].imageURL,
-            score: shamescore
-          })
+
+          // shamescore was being returned as a string so I parseFloated it
+          shamescore = parseFloat(shamescore);
+
+          // Checking if the user has failed 40% or more of the goals they have set
+          if (shamescore >= 0.4) {
+            wallShame.push({
+              id: dbUser[i].id,
+              userName: dbUser[i].username,
+              imageUrl: dbUser[i].imageURL,
+              score: shamescore
+            });
+          }
+
         }
       }
       wallShame.sort(function (a, b) {
-        return parseFloat(a.score - b.score)
+        return parseFloat(a.score - b.score);
       });
 
-      //for loop to send top five only
+      // for loop to send top five only
       var newWallShame = [];
-      for (i = 0; i < 5; i++) {
-        newWallShame.push(wallShame[i])
+      for (i = 0; i < wallShame.length; i++) {
+        newWallShame.push(wallShame[i]);
       };
       res.json(newWallShame);
     });
   });
 
-  // POST ROUTES
+  // GET ROUTES FOR MESSAGES 
 
-  // Route for login link
+  // GET ALL MESSAGES
+  app.get("/api/messages", function (req, res) {
+    db.Message.findAll({ include: [db.User] }).then(function (messageData) {
+
+      console.log(messageData);
+
+      res.json(messageData);
+
+    });
+  });
+
+  // GET ALL MESSAGES FOR A SINGLE USER
+  app.get("/api/messages/:userId", function (req, res) {
+    db.Message.findAll({
+      where: {
+        id: req.params.userId
+      }
+    }).then(function (messagesData) {
+
+      console.log(messagesData);
+      res.json(messagesData);
+
+    });
+  });
+
+  // ALL POST ROUTES
+
+  // ROUTE FOR USER LOGIN
   app.post("/login", function (req, res) {
     db.User.findAll({
       where: { //SELECT * FROM db.User WHERE username = req.body.username AND password = req.body.password
@@ -135,20 +204,25 @@ module.exports = function (app) {
         res.json({ userName: undefined });
       }
       else {
-        console.log(userInfo[0]);
-        var loggedUser = {//Create an object of properties to return to client 
+        // console.log(userInfo[0]);
+        // Create an object of properties to return to client 
+        var loggedUser = {
           "userID": userInfo[0].id,
           "userName": userInfo[0].username,
           "userImage": userInfo[0].imageURL
         };
-        console.log("\nUser logged in with ID of: " + userInfo[0].id); //console log on server side
-        res.json(loggedUser); //send array back to browser for use
+        // console log on server side
+        console.log("\nUser logged in with ID of: " + userInfo[0].id);
+
+        // Send array back to browser for use
+        res.json(loggedUser);
       }
+
     });
   });
 
-  // Route to create a new user
-  app.post("/newUser", function (req, res) {
+  // CREATE A NEW USER
+  app.post("/api/newUser", function (req, res) {
     // Finds or creates a user with the username being posted
     db.User.findOrCreate({
       // defaults are the values being assigned to the new user if they are being created. (username does not need to be included in defaults)
@@ -194,7 +268,9 @@ module.exports = function (app) {
     });
   });
 
-  // New goal request to database
+  // POST ROUTES FOR GOALS AND USER.HTML PAGE
+
+  // CREATE NEW GOAL ROUTE
   app.post("/api/newGoal", function (req, res) {
 
     db.Goal.create({
@@ -210,9 +286,23 @@ module.exports = function (app) {
     });
   });
 
-  // PUT ROUTES
+  // CREATE MESSAGE POST ROUTE
+  app.post("/api/newMessage", function (req, res) {
+    db.Message.create({
+      name: req.body.messageName,
+      body: req.body.messageBody,
+      UserId: req.body.userID
+    }).then(function (messageData) {
 
-  // Goal completed
+      console.log(messageData);
+
+      res.json(messageData);
+    });
+  });
+
+  // ALL PUT ROUTES
+
+  // GOAL COMPLETED ROUTE
   app.put("/api/completeGoal/:goalId", function (req, res) {
 
     db.Goal.update({
@@ -232,9 +322,9 @@ module.exports = function (app) {
       });
   });
 
-  // DELETE ROUTES
+  // ALL DELETE ROUTES
 
-  // Goal deleted
+  // GOAL DELETED ROUTE
   app.delete("/api/deleteGoal/:goalId", function (req, res) {
     db.Goal.destroy({
       where: {
@@ -248,22 +338,5 @@ module.exports = function (app) {
       res.json(data);
     });
   });
-
-  // FUNCTIONS FOR INCREMENTING USER GOAL-COUNTING VALUES
-
-  // Increment goalsMade by one for user
-  function addGoal(userId) {
-    db.User.update({ goalsMade: db.sequelize.literal('goalsMade + 1') }, { where: { id: userId } });
-  }
-
-  // Increments goalsSucceeded by one for the user
-  function goalMet(userId) {
-    db.User.update({ goalsSucceeded: db.sequelize.literal('goalsSucceeded + 1') }, { where: { id: userId } });
-  }
-
-  // Increment goalsDeleted by one for user
-  function goalDeleted(userId) {
-    db.User.update({ goalsDeleted: db.sequelize.literal('goalsDeleted + 1') }, { where: { id: userId } });
-  }
 
 } // module export close

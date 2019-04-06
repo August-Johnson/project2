@@ -136,6 +136,7 @@ li {
 #postMessageBox {
   padding: 30px;
   background-color: #ffffff;
+  margin-top: 10px;
 }
 
 #wholeMessage {
