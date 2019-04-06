@@ -8,30 +8,21 @@
 /*DO NOT AUTOFORMAT THIS FILE FOR READABILITY SAKE*/
 $(document).ready(function () {
 
-    // alert("I ran first!");
-
     //targeting the Bulma box containing the goals - ID should correspond
     var goalsList = $("#userGoals"); // changed from #goalsList
     var goals;
     var userID;
     var goalId;
 
-    // $(document).on("click", "button.delete", handleGoalDelete);
-    // $(document).on("click", "button.edit", handleGoalEdit);
-
     var userLoginData = {
-        // username: localStorage.getItem("username"),
-        userID: localStorage.getItem("userID"),
-        // userImage: localStorage.getItem("userImage")
+        userID: localStorage.getItem("userID")
     }
-
-    //var userID = parseInt(localStorage.getItem("userID"))
-    console.log(userLoginData);
 
     // Calling function that gets the users goals and displays them
     getUserGoals(userLoginData.userID);
 
-
+    // FUNCTIONS
+    
     function displayEmpty() {
         goalsList.empty();
         var messageH2 = $("<h2>");
@@ -39,10 +30,6 @@ $(document).ready(function () {
         messageH2.html("You've got no goals... sad.");
         goalsList.append(messageH2);
     }
-
-    function createNewRow(goal) {
-
-    };
 
     function populateUserGoalsTable(goals) {
         goalsList.empty();
@@ -122,6 +109,25 @@ $(document).ready(function () {
 
     };
 
+    // Function for getting and displaying all goals belonging to the user that is logged in
+    // Passing an arguement that will be the userID for the database to reference
+    function getUserGoals(userID) {
+        $.ajax("/api/goals/" + userID, {
+            type: "GET"
+        }).then(function (goalData) {
+
+            goals = goalData;
+
+            if (!goals || goals.length <= 0) {
+                displayEmpty();
+            }
+            else {
+                populateUserGoalsTable(goals);
+            }
+
+        });
+    }
+
     // Logout button
     $("#logoutGo").on("click", function () {
         localStorage.clear();
@@ -167,25 +173,6 @@ $(document).ready(function () {
             });
         }
     });
-
-    // Function for getting and displaying all goals belonging to the user that is logged in
-    // Passing an arguement that will be the userID for the database to reference
-    function getUserGoals(userID) {
-        $.ajax("/api/goals/" + userID, {
-            type: "GET"
-        }).then(function (goalData) {
-
-            goals = goalData;
-
-            if (!goals || goals.length <= 0) {
-                displayEmpty();
-            }
-            else {
-                populateUserGoalsTable(goals);
-            }
-
-        });
-    }
 
     // DYNAMICALLY CREATED BUTTON CLICK EVENTS
 
