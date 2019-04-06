@@ -51,7 +51,7 @@ $(document).ready(function () {
     //This is creating new HTML elements.
     //The "goal" being passed in at this stage are the JSON objects of the goals array
     function createNewRow(user) {
-        console.log(user);
+        console.log("CREATE NEW ROW: " + user.userName);
         //use the correct Bulma elements
         // |
         // |
@@ -70,8 +70,8 @@ $(document).ready(function () {
 
         //not 100% sure about this
         //Sindy you also have an ID on this called poster profile?? What do
-        var newUserImage = $("<image>");
-        // newUserImage.attr("src", user.imageUrl);
+        var newUserImage = $("<img>");
+        newUserImage.attr("src", user.imageUrl);
 
         var newUsernameDiv = $("<div>");
         newUsernameDiv.addClass("media-content");
@@ -97,7 +97,6 @@ $(document).ready(function () {
         newUsernameP.append(newUsernameStrong);
 
         return newUserBox;
-
     };
 
     // Logout button
@@ -105,90 +104,40 @@ $(document).ready(function () {
         localStorage.clear();
     });
 
-    // Add goal
-    $("#addGoal").on("click", function (event) {
-        event.preventDefault();
-
-        var goalTitle = $("#goalTitle").val().trim();
-        var goalDescription = $("#goalDescriptionBox").val().trim();
-
-        userID = localStorage.getItem("userID");
-
-        console.log("Title: " + goalTitle);
-        console.log("Description: " + goalDescription);
-        console.log("userID: " + userID);
-
-        if (goalTitle === "" || goalTitle === undefined || goalTitle === null) {
-            return alert("Goal title field is empty!");
-        }
-        else if (goalDescription === "" || goalDescription === undefined || goalDescription === null) {
-            return alert("Goal description field is empty!");
-        }
-        else {
-            var newGoal = {
-                goalTitle: goalTitle,
-                goalDescription: goalDescription,
-                userID: userID
-            }
-            console.log(newGoal);
-
-
-            //THIS IS THE PARTS THAT'S LOADING WEIRD
-            $.ajax("/api/newGoal", {
-                type: "POST",
-                data: newGoal
-            }).then(function (goalData) {
-                console.log(goalData);
-                getUserGoals(userID);
-            });
-        }
-    });
-
-    // // Function for getting and displaying all goals belonging to the user that is logged in
-    // // Passing an arguement that will be the userID for the database to reference
-    // function getUserGoals(userID) {
-    //     $.ajax("/api/goals/" + userID , {
-    //         type: "GET"
-    //     }).then(function (goalData) {
-    //         console.log(goalData);
-    //         goals = goalData;
-    //         if (!goals || goals.length <= 0) {
-    //             displayEmpty();
-    //         }
-    //         else {
-    //             populateUserGoalsTable(goals);
-    //         }
-
-    //     });
-    // }
-
-
+    // Getting users for the wall of fame (80% goal success rate or higher)
     $.ajax("/api/fame", {
         type: "GET",
     }).then(function (data) {
-        console.log(data);
+
         var users = data;
-        if (!users) {
+
+        // If there are no results or if the GET request returns an empty array
+        if (!users || users.length <= 0) {
             displayEmpty(championsList);
         }
         else {
             populateListWithUsers(championsList, users);
         }
-    })
+    });
 
+    // Getting users for the wall of shame (60% goal success rate or lower or 40% failure rate)
+    // 60% success rate counting goals deleted, not goals that are still in progress
     $.ajax("/api/shame", {
         type: "GET",
     }).then(function (data) {
-        console.log(data);
+
         var users = data;
-        if (!users) {
+        // If there are no results or the GET request returns an empty array
+        if (!users || users.length <= 0) {
             displayEmpty(slackersList);
         }
         else {
             populateListWithUsers(slackersList, users);
         }
-    })
+    });
 
+    // MESSAGES (NOT COMPLETED)
+    
     // $.ajax("/api/messages",{
     //     type: "GET",
     // }).then(function(data){
@@ -201,7 +150,4 @@ $(document).ready(function () {
     //         populateListWithUsers(messagesList, users);
     //     }
     // })
-
-
-
 }); // End of document.ready()
