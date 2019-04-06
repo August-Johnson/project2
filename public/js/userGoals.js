@@ -152,10 +152,8 @@ $(document).ready(function () {
                 goalDescription: goalDescription,
                 userID: userID
             }
-            console.log(newGoal);
 
-
-            //THIS IS THE PARTS THAT'S LOADING WEIRD
+            // POST request to create new goal
             $.ajax("/api/newGoal", {
                 type: "POST",
                 data: newGoal
@@ -164,6 +162,7 @@ $(document).ready(function () {
                 $("#goalTitle").val("");
                 $("#goalDescriptionBox").val("");
 
+                // Reprint the goals to the page (including goal just created)
                 getUserGoals(userID);
             });
         }
@@ -175,8 +174,9 @@ $(document).ready(function () {
         $.ajax("/api/goals/" + userID, {
             type: "GET"
         }).then(function (goalData) {
-            console.log(goalData);
+
             goals = goalData;
+
             if (!goals || goals.length <= 0) {
                 displayEmpty();
             }
@@ -191,6 +191,8 @@ $(document).ready(function () {
 
     // Delete goal button event
     $(document).on("click", ".goalDeleteButton", function () {
+
+        // Getting goal attr, which was set to the goal's id in the database table
         goalId = $(this).attr("goalId");
 
         userID = localStorage.getItem("userID");
@@ -210,6 +212,8 @@ $(document).ready(function () {
 
     // Update goal / mark as complete
     $(document).on("click", ".goalCompleteButton", function () {
+
+        // Getting goal attr, which was set to the goal's id in the database table
         goalId = $(this).attr("goalId");
 
         userID = localStorage.getItem("userID");
@@ -228,85 +232,5 @@ $(document).ready(function () {
             getUserGoals(userID);
         });
     });
-
-    $("#postButton").on("click", function (event) {
-        event.preventDefault();
-
-        var messageName = $("#postName").val().trim();
-        var messageBody = $("#postBody").val().trim();
-        userID = localStorage.getItem("userID");
-
-        // Checking if any input fields are empty or invalid
-        if (messageName === "" || messageName === undefined || messageName === null) {
-            return alert("You did not enter a name!");
-        }
-        else if (messageBody === "" || messageBody === undefined || messageBody === null) {
-            return alert("You do not have anything in your post body!");
-        }
-        else if (messageName.length > 1) {
-            return alert("Name field is too short!");
-        }
-        else if (messageBody.length > 1) {
-            return alert("Message field is too short!");
-        }
-
-        var messageData = {
-            messageName: messageName,
-            messageBody: messageBody,
-            userID: userID
-        }
-
-        console.log(messageData);
-
-        // ajax POST request
-        $.ajax("/api/newMessage", {
-            type: "POST",
-            data: messageData
-        }).then(function (data) {
-            console.log(data);
-            $("#postName").val('');
-            $("#postBody").val('');
-            // Print messages function call (pass 'userID as argument to function)
-
-        });
-    });
-
-    // Function for printing all messages
-    function getMessages() {
-        // Jquery here
-        // Dynamically create html elements and styling
-    }
-
-    function createMessageRow(message) {
-
-        var createMessageElement = $(
-            '<article class="media">'
-            + '<div class="media-left">'
-            + '<figure class="image is-128x128">'
-            + '<img src="' + imageLink + 'alt="Image">'
-            + '</figure>'
-            + '</div>'
-            + '<div class="media-content">'
-            + '<div class="content">'
-            + '<p>'
-            + '<strong class="postMessageName">' + message.name + '</strong> <small class="postUsername">@' + username + '</small> <small id="postTime">31m</small>'
-            + '<p class="postMessageBody">' + message.body + '</p>'
-            + '</p>'
-            + '</div>'
-            + '<nav class="level is-mobile">'
-            + '<div class="level-left">'
-            + '<a class="level-item" aria-label="like">'
-            + '<span class="icon is-small">'
-            + '<i class="fas fa-heart" aria-hidden="true"></i>'
-            + '</span>'
-            + '</a>'
-            + '</div>'
-            + '</nav>'
-            + '</div>'
-            + '</article></div>'
-        );
-
-        return createMessageElement;
-    }
 
 }); // End of document.ready()

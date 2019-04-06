@@ -2,11 +2,11 @@
 $(document).ready(function () {
 
     // alert("I ran first!");
-
+    getMessages();
     //targeting the Bulma boxes containing the champions and slackers by the box ID
     var championsList = $("#championUsersBoxes"); // changed from #goalsList
     var slackersList = $("#slackerUsersBoxes");
-    var messagesList = $("messagesBoxes");
+    var messagesList = $("#messagesBoxes");
     var champions;
     var slackers;
 
@@ -46,6 +46,16 @@ $(document).ready(function () {
             usersToAdd.push(createNewRow(users[i]));
         }
         list.append(usersToAdd);
+    }
+
+    // messages populate function (pretty much copy of 'populateListWithUsers' function)
+    function populateMessageBoard(list, messages) {
+        list.empty();
+        var messagesToAdd = [];
+        for (var i = 0; i < messages.length; i++) {
+            messagesToAdd.push(createMessageRow(messages[i]));
+        }
+        list.append(messagesToAdd);
     }
 
     //This is creating new HTML elements.
@@ -99,6 +109,38 @@ $(document).ready(function () {
         return newUserBox;
     };
 
+    // message row function (pretty much copy of 'createNewRow' function)
+    function createMessageRow(message) {
+        console.log("CREATE NEW ROW: " + message.name);
+        //use the correct Bulma elements
+        // |
+        // |
+        // v
+        var newMessageBox = $("<div>");
+        newMessageBox.addClass("box");
+
+        var newMessageNameDiv = $("<div>");
+        newMessageNameDiv.addClass("media-content");
+
+        var newMessageNameContentDiv = $("<div>");
+        newMessageNameContentDiv.addClass("content");
+
+        var newMessageName = $("<h3>");
+        newMessageName.text(message.name);
+
+        var newMessageBody = $("<p>");
+        newMessageBody.text(message.body);
+
+        newMessageBox.append(newMessageNameDiv);
+
+        //Next append all the created elements in order that they are nested.
+        newMessageNameDiv.append(newMessageNameContentDiv);
+        newMessageNameContentDiv.append(newMessageName);
+        newMessageNameContentDiv.append(newMessageBody);
+
+        return newMessageBox;
+    };
+
     // Logout button
     $("#logoutGo").on("click", function () {
         localStorage.clear();
@@ -137,17 +179,63 @@ $(document).ready(function () {
     });
 
     // MESSAGES (NOT COMPLETED)
-    
-    // $.ajax("/api/messages",{
-    //     type: "GET",
-    // }).then(function(data){
-    //     console.log(data);
-    //     var users = data;
-    //     if (users) {
-    //         displayEmpty();
-    //     }
-    //     else {
-    //         populateListWithUsers(messagesList, users);
-    //     }
-    // })
+
+    // Create new message (button click event)
+    $("#postButton").on("click", function (event) {
+        event.preventDefault();
+
+        var messageName = $("#postName").val().trim();
+        var messageBody = $("#postBody").val().trim();
+        userID = localStorage.getItem("userID");
+
+        // Checking if any input fields are empty or invalid
+        if (messageName === "" || messageName === undefined || messageName === null) {
+            return alert("You did not enter a name!");
+        }
+        else if (messageBody === "" || messageBody === undefined || messageBody === null) {
+            return alert("You do not have anything in your post body!");
+        }
+        else if (messageName.length <= 1) {
+            return alert("Name field is too short!");
+        }
+        else if (messageBody.length <= 1) {
+            return alert("Message field is too short!");
+        }
+
+        var messageData = {
+            messageName: messageName,
+            messageBody: messageBody,
+            userID: userID
+        }
+
+        // ajax POST request
+        $.ajax("/api/newMessage", {
+            type: "POST",
+            data: messageData
+        }).then(function (data) {
+
+            $("#postName").val('');
+            $("#postBody").val('');
+            // Print messages function call (pass 'userID as argument to function)
+            getMessages();
+        });
+
+    });
+
+    // Function for printing all messages
+    function getMessages() {
+        // Jquery here
+        $.ajax("/api/messages", {
+            type: "GET"
+        }).then(function (data) {
+
+            console.log("MESSAGES DATA");
+            console.log(data);
+
+            populateMessageBoard(messagesList, data);
+
+        });
+        // Dynamically create html elements and styling
+    }
+
 }); // End of document.ready()
