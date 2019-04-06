@@ -27,7 +27,7 @@ $(document).ready(function () {
 
     //var userID = parseInt(localStorage.getItem("userID"))
     console.log(userLoginData);
-    
+
     // Calling function that gets the users goals and displays them
     getUserGoals(userLoginData.userID);
 
@@ -56,11 +56,11 @@ $(document).ready(function () {
     //This is creating new HTML elements.
     //The "goal" being passed in at this stage are the JSON objects of the goals array
     function createNewRow(goal) {
-        console.log(goal);  
+        console.log(goal);
         //use the correct Bulma elements
-            // |
-            // |
-            // v
+        // |
+        // |
+        // v
         var newGoalCard = $("<div>");
         newGoalCard.addClass("box newGoalBox");
 
@@ -78,153 +78,156 @@ $(document).ready(function () {
         var newGoalButtonGroup = $("<div>");
         newGoalButtonGroup.addClass("field is-grouped");
 
-            var newGoalSuccessButtonControlDiv = $("<div>");
-            newGoalSuccessButtonControlDiv.addClass("control");
+        var newGoalSuccessButtonControlDiv = $("<div>");
+        newGoalSuccessButtonControlDiv.addClass("control");
 
-                var newGoalSuccessButton = $("<button>");
+        var newGoalSuccessButton = $("<button>");
 
-                newGoalSuccessButton.addClass("button is-success goalCompleteButton");
-                newGoalSuccessButton.attr("goalId", goal.id);
+        newGoalSuccessButton.addClass("button is-success goalCompleteButton");
+        newGoalSuccessButton.attr("goalId", goal.id);
 
-                var newGoalSuccessButtonText = $("<p>");
-                newGoalSuccessButtonText.addClass("completeButtonText");
-                newGoalSuccessButtonText.text("Goal Completed!");
+        var newGoalSuccessButtonText = $("<p>");
+        newGoalSuccessButtonText.addClass("completeButtonText");
+        newGoalSuccessButtonText.text("Goal Completed!");
 
-            var newGoalDeleteButtonControlDiv = $("<div>");
-            newGoalDeleteButtonControlDiv.addClass("control");
+        var newGoalDeleteButtonControlDiv = $("<div>");
+        newGoalDeleteButtonControlDiv.addClass("control");
 
-                var newGoalDeleteButton = $("<button>");
+        var newGoalDeleteButton = $("<button>");
 
-                newGoalDeleteButton.addClass("button is-danger goalDeleteButton");
-                newGoalDeleteButton.attr("goalId", goal.id);
+        newGoalDeleteButton.addClass("button is-danger goalDeleteButton");
+        newGoalDeleteButton.attr("goalId", goal.id);
 
 
-                var newGoalDeleteButtonText = $("<p>");
-                newGoalDeleteButtonText.addClass("deleteButtonText");
-                newGoalDeleteButtonText.text("I give up.");
+        var newGoalDeleteButtonText = $("<p>");
+        newGoalDeleteButtonText.addClass("deleteButtonText");
+        newGoalDeleteButtonText.text("I give up.");
 
-//Next append all the created elements in order that they are nested.
-            newGoalCard.append(newGoalName);
-            newGoalCard.append(newGoalDescription);
-            newGoalCard.append(newGoalBreakBetweenDescriptionAndButtons);
-            newGoalCard.append(newGoalButtonGroup);
+        //Next append all the created elements in order that they are nested.
+        newGoalCard.append(newGoalName);
+        newGoalCard.append(newGoalDescription);
+        newGoalCard.append(newGoalBreakBetweenDescriptionAndButtons);
+        newGoalCard.append(newGoalButtonGroup);
 
-//then the buttons
-            newGoalButtonGroup.append(newGoalSuccessButtonControlDiv);
-            newGoalSuccessButtonControlDiv.append(newGoalSuccessButton);
-            newGoalSuccessButton.append(newGoalSuccessButtonText);
+        //then the buttons
+        newGoalButtonGroup.append(newGoalSuccessButtonControlDiv);
+        newGoalSuccessButtonControlDiv.append(newGoalSuccessButton);
+        newGoalSuccessButton.append(newGoalSuccessButtonText);
 
-            newGoalButtonGroup.append(newGoalDeleteButtonControlDiv);
-            newGoalDeleteButtonControlDiv.append(newGoalDeleteButton);
-            newGoalDeleteButton.append(newGoalDeleteButtonText);
-            
-    return newGoalCard;
-    
-};
+        newGoalButtonGroup.append(newGoalDeleteButtonControlDiv);
+        newGoalDeleteButtonControlDiv.append(newGoalDeleteButton);
+        newGoalDeleteButton.append(newGoalDeleteButtonText);
 
-// Logout button
-$("#logoutGo").on("click", function () {
-    localStorage.clear();
-}); 
+        return newGoalCard;
 
-// Add goal
-$("#addGoal").on("click", function(event) {
-    event.preventDefault();
+    };
 
-    var goalTitle = $("#goalTitle").val().trim();
-    var goalDescription = $("#goalDescriptionBox").val().trim();
+    // Logout button
+    $("#logoutGo").on("click", function () {
+        localStorage.clear();
+    });
 
-    userID = localStorage.getItem("userID");
+    // Add goal
+    $("#addGoal").on("click", function (event) {
+        event.preventDefault();
 
-    console.log("Title: " + goalTitle);
-    console.log("Description: " + goalDescription);
-    console.log("userID: " + userID);
+        var goalTitle = $("#goalTitle").val().trim();
+        var goalDescription = $("#goalDescriptionBox").val().trim();
 
-    if (goalTitle === "" || goalTitle === undefined || goalTitle === null) {
-        return alert("Goal title field is empty!");
-    } 
-    else if (goalDescription === "" || goalDescription === undefined || goalDescription === null) {
-        return alert("Goal description field is empty!");
-    }
-    else {
-        var newGoal = {
-            goalTitle: goalTitle,
-            goalDescription: goalDescription,
-            userID: userID
+        userID = localStorage.getItem("userID");
+
+        console.log("Title: " + goalTitle);
+        console.log("Description: " + goalDescription);
+        console.log("userID: " + userID);
+
+        if (goalTitle === "" || goalTitle === undefined || goalTitle === null) {
+            return alert("Goal title field is empty!");
         }
-        console.log(newGoal);
-
-
-        //THIS IS THE PARTS THAT'S LOADING WEIRD
-        $.ajax("/api/newGoal", {
-            type: "POST",
-            data: newGoal
-        }).then(function(goalData) {
-            console.log(goalData);
-            getUserGoals(userID);
-        });
-    }
-});
-
-// Function for getting and displaying all goals belonging to the user that is logged in
-// Passing an arguement that will be the userID for the database to reference
-function getUserGoals(userID) {
-    $.ajax("/api/goals/" + userID , {
-        type: "GET"
-    }).then(function (goalData) {
-        console.log(goalData);
-        goals = goalData;
-        if (!goals || goals.length <= 0) {
-            displayEmpty();
+        else if (goalDescription === "" || goalDescription === undefined || goalDescription === null) {
+            return alert("Goal description field is empty!");
         }
         else {
-            populateUserGoalsTable(goals);
+            var newGoal = {
+                goalTitle: goalTitle,
+                goalDescription: goalDescription,
+                userID: userID
+            }
+            console.log(newGoal);
+
+
+            //THIS IS THE PARTS THAT'S LOADING WEIRD
+            $.ajax("/api/newGoal", {
+                type: "POST",
+                data: newGoal
+            }).then(function (goalData) {
+
+                $("#goalTitle").val("");
+                $("#goalDescriptionBox").val("");
+
+                getUserGoals(userID);
+            });
         }
-    
     });
-}
 
-// DYNAMICALLY CREATED BUTTON CLICK EVENTS
+    // Function for getting and displaying all goals belonging to the user that is logged in
+    // Passing an arguement that will be the userID for the database to reference
+    function getUserGoals(userID) {
+        $.ajax("/api/goals/" + userID, {
+            type: "GET"
+        }).then(function (goalData) {
+            console.log(goalData);
+            goals = goalData;
+            if (!goals || goals.length <= 0) {
+                displayEmpty();
+            }
+            else {
+                populateUserGoalsTable(goals);
+            }
 
-// Delete goal button event
-$(document).on("click", ".goalDeleteButton", function() {
-    goalId = $(this).attr("goalId");
-
-    userID = localStorage.getItem("userID");
-
-    var userData = {
-        userID: userID
+        });
     }
 
-    // ajax delete request
-    $.ajax("/api/deleteGoal/" + goalId, {
-        type: "DELETE",
-        data: userData
-    }).then(function(data) {
-        getUserGoals(userID);
+    // DYNAMICALLY CREATED BUTTON CLICK EVENTS
+
+    // Delete goal button event
+    $(document).on("click", ".goalDeleteButton", function () {
+        goalId = $(this).attr("goalId");
+
+        userID = localStorage.getItem("userID");
+
+        var userData = {
+            userID: userID
+        }
+
+        // ajax delete request
+        $.ajax("/api/deleteGoal/" + goalId, {
+            type: "DELETE",
+            data: userData
+        }).then(function (data) {
+            getUserGoals(userID);
+        });
     });
-});
 
-// Update goal / mark as complete
-$(document).on("click", ".goalCompleteButton", function() {
-    goalId = $(this).attr("goalId");
+    // Update goal / mark as complete
+    $(document).on("click", ".goalCompleteButton", function () {
+        goalId = $(this).attr("goalId");
 
-    userID = localStorage.getItem("userID");
+        userID = localStorage.getItem("userID");
 
-    // Passing userID in the PUT request for the database to reference
-    var userData = {
-        userID: userID
-    }
+        // Passing userID in the PUT request for the database to reference
+        var userData = {
+            userID: userID
+        }
 
-    // ajax put request
-    $.ajax("/api/completeGoal/" + goalId, {
-        type: "PUT",
-        data: userData
-    }).then(function(data) {
-        // Run function to reprint all non-completed goals to the user
-        getUserGoals(userID);
+        // ajax put request
+        $.ajax("/api/completeGoal/" + goalId, {
+            type: "PUT",
+            data: userData
+        }).then(function (data) {
+            // Run function to reprint all non-completed goals to the user
+            getUserGoals(userID);
+        });
     });
-});
 
     $("#postButton").on("click", function (event) {
         event.preventDefault();
@@ -246,7 +249,7 @@ $(document).on("click", ".goalCompleteButton", function() {
         else if (messageBody.length > 1) {
             return alert("Message field is too short!");
         }
-        
+
         var messageData = {
             messageName: messageName,
             messageBody: messageBody,
@@ -264,7 +267,7 @@ $(document).on("click", ".goalCompleteButton", function() {
             $("#postName").val('');
             $("#postBody").val('');
             // Print messages function call (pass 'userID as argument to function)
-            
+
         });
     });
 
@@ -277,30 +280,30 @@ $(document).on("click", ".goalCompleteButton", function() {
     function createMessageRow(message) {
 
         var createMessageElement = $(
-        '<article class="media">'
-        + '<div class="media-left">'
-        + '<figure class="image is-128x128">'
-        + '<img src="' + imageLink + 'alt="Image">'
-        + '</figure>'
-        + '</div>'
-        + '<div class="media-content">'
-        + '<div class="content">'
-        + '<p>'
-        + '<strong class="postMessageName">' + message.name + '</strong> <small class="postUsername">@' + username + '</small> <small id="postTime">31m</small>'
-        + '<p class="postMessageBody">' + message.body + '</p>'
-        + '</p>'
-        + '</div>'
-        + '<nav class="level is-mobile">'
-        + '<div class="level-left">'
-        + '<a class="level-item" aria-label="like">'
-        + '<span class="icon is-small">'
-        + '<i class="fas fa-heart" aria-hidden="true"></i>'
-        + '</span>'
-        + '</a>'
-        + '</div>'
-        + '</nav>'
-        + '</div>'
-        + '</article></div>'
+            '<article class="media">'
+            + '<div class="media-left">'
+            + '<figure class="image is-128x128">'
+            + '<img src="' + imageLink + 'alt="Image">'
+            + '</figure>'
+            + '</div>'
+            + '<div class="media-content">'
+            + '<div class="content">'
+            + '<p>'
+            + '<strong class="postMessageName">' + message.name + '</strong> <small class="postUsername">@' + username + '</small> <small id="postTime">31m</small>'
+            + '<p class="postMessageBody">' + message.body + '</p>'
+            + '</p>'
+            + '</div>'
+            + '<nav class="level is-mobile">'
+            + '<div class="level-left">'
+            + '<a class="level-item" aria-label="like">'
+            + '<span class="icon is-small">'
+            + '<i class="fas fa-heart" aria-hidden="true"></i>'
+            + '</span>'
+            + '</a>'
+            + '</div>'
+            + '</nav>'
+            + '</div>'
+            + '</article></div>'
         );
 
         return createMessageElement;
